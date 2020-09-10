@@ -1,6 +1,6 @@
 import React from "react";
-import "./style/index.css";
-const MainPage = () => {
+import "./style/mainHeader.css";
+const MainHeader = () => {
   return (
     <header>
       <div id="title">
@@ -16,4 +16,4 @@ const MainPage = () => {
     </header>
   );
 };
-export default MainPage;
+export default MainHeader;
