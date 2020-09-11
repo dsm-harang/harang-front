@@ -17,10 +17,14 @@
   margin: 0;
   padding: 0;
 }
+a {
+  text-decoration: none;
+}
 header {
   background-color: white;
   display: flex;
-  margin: 5px 10px;
+  margin: 10px 15px;
+  margin-bottom: 20px;
   width: 100%;
   align-items: center;
 }
@@ -52,10 +56,10 @@ nav {
   height: 100%;
   margin: 0 20px;
 }
-nav > div {
+nav > a {
   font-family: "S-CoreDream-3Light";
   margin: 10px 50px;
 }
-nav > div:hover {
+nav > a:hover {
   font-weight: bold;
 }

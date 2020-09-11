@@ -1,17 +1,19 @@
-import React from "react";
-import "./style/mainHeader.css";
+import React, { useState } from "react";
+import "./style/MainHeader.css";
 const MainHeader = () => {
   return (
     <header>
       <div id="title">
-        <p id="title-text">HARANG</p> <input></input>{" "}
-        <i className="fas fa-search"></i>
+        <a href="#" id="title-text">
+          HARANG
+        </a>{" "}
+        <input></input> <i className="fas fa-search"></i>
       </div>
 
       <nav>
-        <div id="meeting">전체모임</div>
-        <div id="market">중고장터</div>
-        <div id="mypage">마이페이지</div>
+        <a id="meeting">전체모임</a>
+        <a id="market">중고장터</a>
+        <a id="mypage">마이페이지</a>
       </nav>
     </header>
   );
