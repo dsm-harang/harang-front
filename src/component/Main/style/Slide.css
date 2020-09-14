@@ -4,7 +4,7 @@
 }
 
 #container {
-  margin: 0 150px;
+  margin: 0;
   overflow: hidden;
 }
 #slide {
@@ -33,10 +33,7 @@ button {
 button {
   margin: 0 3px;
 }
-button:active {
-  border: none;
-  border-radius: 100%;
-}
+
 #selected {
   background-color: #a48fe0;
 }

@@ -42,8 +42,10 @@ header {
   font-size: 25px;
   margin-left: 5px;
 }
-
-input {
+#searchBox {
+  display: flex;
+}
+#searchBox > input {
   width: 500px;
   margin: 20px 15px;
   margin-left: 50px;
@@ -61,5 +63,8 @@ nav > a {
   margin: 10px 50px;
 }
 nav > a:hover {
+  font-weight: bold;
+}
+.selected {
   font-weight: bold;
 }
