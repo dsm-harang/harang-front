@@ -9,29 +9,29 @@ const Slide = () => {
   const slide = useRef(0);
 
   function nextSlide(num) {
-    if (num > totalSlide) num = 0;
+    console.log(num);
     slide.current.style.transform = `translate3d(${num * -100}%, 0px, 0px)`;
     Array.prototype.forEach.call(btns, function (element) {
       element.id = "";
     });
-    btns[num].id = "selected";
-    setCurSlide(num);
+    if (num < 3) {
+      btns[num].id = "selected";
+    }
   }
-
-  function autoSlide(num) {
-    nextSlide(num);
-    setTimeout(() => autoSlide(num + 1), 3000);
-  }
-
   function setBnt(e) {
     nextSlide(e.target.value);
+    setCurSlide(parseInt(e.target.value));
   }
+
+  function autoSlide() {
+    curSlide < totalSlide ? setCurSlide(curSlide + 1) : setCurSlide(0);
+    nextSlide(curSlide);
+  }
+
   useEffect(() => {
-    console.log("-");
-    setInterval(() => {
-      autoSlide(curSlide + 1);
-    }, 3000);
-  }, []);
+    var interval = setTimeout(autoSlide, 2000);
+    return () => clearTimeout(interval);
+  }, [curSlide]);
 
   return (
     <div>

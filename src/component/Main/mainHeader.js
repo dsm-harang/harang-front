@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style/MainHeader.css";
 const MainHeader = (props) => {
-  const ids = ["meeting", "market", "mypage"];
+  const ids = ["main", "market", "mypage"];
   const curPage = document.getElementById(ids[parseInt(props.index)]);
 
   function setMain() {
@@ -9,6 +9,7 @@ const MainHeader = (props) => {
       curPage.className = "selected";
     }
   }
+
   setMain();
 
   return (
@@ -23,7 +24,7 @@ const MainHeader = (props) => {
       </div>
 
       <nav>
-        <a id="meeting" className="">
+        <a id="main" className="">
           전체모임
         </a>
         <a id="market" className="">
