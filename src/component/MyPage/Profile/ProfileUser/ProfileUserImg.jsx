@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import * as S from '../../style';
+import ImgAdd from './ImgAdd';
 
-const ProfileUserImg = ({ img, imgChange }) => {
+const ProfileUserImg = ({ img, imgChange, isMine }) => {
   const inputChangeHandler = event => {
-    imgChange(event.target.value);
+    const file = event.target.files[0];
+    const fileUrl = fileToStringUrl(file);
+    imgChange(fileUrl);
   };
+  const fileToStringUrl = useCallback(file => {
+    return URL.createObjectURL(file);
+  }, []);
   return (
-    <div>
+    <S.MypageUserImg>
       <S.MypageImg src={img} alt="유저 프로필 사진" />
-      <S.inputFile type="file" onChange={inputChangeHandler} />
-    </div>
+      {isMine ? (
+        <label>
+          <ImgAdd />
+          <S.inputFile type="file" onChange={inputChangeHandler} />
+        </label>
+      ) : (
+        ''
+      )}
+    </S.MypageUserImg>
   );
 };
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useCallback } from 'react';
 import * as S from '../style';
-import CommentContent from './CommentContent';
+import CommentContent from '../Comment/CommentContent';
 
-const Comment = ({ comments }) => {
+const AnotherComment = ({ comments }) => {
   const setComment = useCallback(comments => {
     return comments.map(comment => {
       return (
@@ -16,11 +16,11 @@ const Comment = ({ comments }) => {
     });
   }, []);
   return (
-    <S.Comment>
+    <S.AnotherPersonComment>
       <S.Title>코멘트</S.Title>
       <div>{setComment(comments)}</div>
-    </S.Comment>
+    </S.AnotherPersonComment>
   );
 };
 
-export default Comment;
+export default AnotherComment;

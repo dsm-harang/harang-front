@@ -3,10 +3,10 @@ import ProfileUserImg from './ProfileUserImg';
 import ProfileStar from './ProfileStar';
 import * as S from '../../style';
 
-const Profile = ({ img, imgChange, userName }) => {
+const Profile = ({ img, imgChange, userName, isMine }) => {
   return (
     <S.MypageUser>
-      <ProfileUserImg img={img} imgChange={imgChange} />
+      <ProfileUserImg img={img} imgChange={imgChange} isMine={isMine} />
       <S.MypageProfileDataWrapper>
         <div>
           <S.MypageUserName>{userName}</S.MypageUserName>

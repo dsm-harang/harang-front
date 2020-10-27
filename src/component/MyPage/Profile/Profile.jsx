@@ -2,11 +2,26 @@ import React from 'react';
 import ProfileUser from './ProfileUser';
 import * as S from '../style';
 
-const Profile = ({ img, imgChange, userName }) => {
+const Profile = ({ img, imgChange, userName, isMine, modalOn }) => {
   return (
     <div>
       <S.Profile>
-        <ProfileUser img={img} userName={userName} imgChange={imgChange} />
+        <ProfileUser
+          img={img}
+          userName={userName}
+          imgChange={imgChange}
+          isMine={isMine}
+        />
+        {isMine ? (
+          ''
+        ) : (
+          <S.ProfileReport onClick={modalOn}>
+            <div>
+              <div />
+              <p>신고하기</p>
+            </div>
+          </S.ProfileReport>
+        )}
       </S.Profile>
     </div>
   );
