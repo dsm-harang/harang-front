@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import ReviewModalStar from './ReviewModalStar';
+import * as S from '../../style';
 
 const RequestApproveModalContent = ({
   name,
@@ -19,14 +20,12 @@ const RequestApproveModalContent = ({
     [id],
   );
   return (
-    <div className="board_content">
-      <img className="board_userImg" src={src} />
-      <p className="board_contentText">{name}</p>
+    <S.BoardContent>
+      <S.BoardUserImg src={src} />
+      <S.BoardContentText>{name}</S.BoardContentText>
       <ReviewModalStar star={star} starChange={starClickHandler} />
-      <button className="review_button" onClick={buttonClickHandler}>
-        별점주기
-      </button>
-    </div>
+      <S.ReviewButton onClick={buttonClickHandler}>별점주기</S.ReviewButton>
+    </S.BoardContent>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import RequestStar from './RequestStar';
+import * as S from '../../style';
 
 const RequestApproveModalContent = ({
   name,
@@ -12,15 +13,15 @@ const RequestApproveModalContent = ({
     setPersonChecked(id);
   }, [id]);
   return (
-    <div className="board_content">
-      <img className="board_userImg" src={src} />
-      <p className="board_contentText">{name}</p>
+    <S.BoardContent>
+      <S.BoardUserImg src={src} />
+      <S.BoardContentText>{name}</S.BoardContentText>
       <RequestStar star={star} />
       <label>
         <input type="checkbox" onChange={inputChangeHandler} />
         <div />
       </label>
-    </div>
+    </S.BoardContent>
   );
 };
 

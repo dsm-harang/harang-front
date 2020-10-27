@@ -1,18 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useCallback } from 'react';
+import * as S from '../../style';
 
 const RequestStar = ({ star }) => {
-  const setStar = useCallback(() => {
-    let buffer = [];
-    for (let i = 1; i <= star; i++) {
-      buffer = [...buffer, <div className="full-star" />];
-    }
-    for (let i = star; i < 5; i++) {
-      buffer = [...buffer, <div className="empty-star" />];
-    }
-    return buffer;
-  }, [star]);
-  return <div className="request-star-wrapper">{setStar()}</div>;
+  return (
+    <S.ModalStarWrapper>
+      <S.ModalStarWrapper>
+        <S.ModalStar star={star} />
+      </S.ModalStarWrapper>
+    </S.ModalStarWrapper>
+  );
 };
 
 export default RequestStar;

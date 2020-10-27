@@ -1,24 +1,19 @@
 import React from 'react';
 import { useCallback } from 'react';
+import * as S from '../../style';
 
 const ReviewModalStar = ({ star, starChange }) => {
   const setStar = useCallback(() => {
     let buffer = [];
     for (let i = 0; i < star; i++) {
-      buffer = [
-        ...buffer,
-        <div className="full-star" onClick={() => starChange(i + 1)} />,
-      ];
+      buffer = [...buffer, <S.FullStar onClick={() => starChange(i + 1)} />];
     }
     for (let i = star; i < 5; i++) {
-      buffer = [
-        ...buffer,
-        <div className="empty-star" onClick={() => starChange(i + 1)} />,
-      ];
+      buffer = [...buffer, <S.EmptyStar onClick={() => starChange(i + 1)} />];
     }
     return buffer;
   }, [star]);
-  return <div className="request-star-wrapper">{setStar()}</div>;
+  return <S.RequestStarWrapper>{setStar()}</S.RequestStarWrapper>;
 };
 
 export default ReviewModalStar;
