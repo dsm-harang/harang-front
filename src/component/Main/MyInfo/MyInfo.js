@@ -9,32 +9,18 @@ import {
 } from "./MyInfoStyle";
 import { Cookies } from "react-cookie";
 import dummy from "./dummy/data.json";
+import StarCounter from "../StarCounter";
 const MyInfo = () => {
   const userData = dummy.data;
   const score = 2.5;
-  const stars = [];
+  const stars = StarCounter(score);
   const createTag = () => {
     const tags = new Cookies().get("search").split(",");
     tags.pop();
     return tags;
   };
   const tags = new Cookies().get("search") && createTag();
-  const fullStars = parseInt(score / 1);
-  const halfStars = score % 1 !== 0;
-  const emptyStars = 5 - (halfStars + fullStars);
 
-  const createStar = () => {
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<i className="fas fa-star"></i>);
-    }
-    for (let i = 0; i < halfStars; i++) {
-      stars.push(<i className="fas fa-star-half-alt"></i>);
-    }
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(<i className="far fa-star"></i>);
-    }
-  };
-  createStar();
   return (
     <Container>
       <section>

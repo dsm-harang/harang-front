@@ -1,9 +1,9 @@
 import React from "react";
-import Login from "./component/Signin/Signin";
+import MainPage from "./component/Main/MainPage";
 function App() {
   return (
     <div>
-      <Login />
+      <MainPage />
     </div>
   );
 }

@@ -88,7 +88,7 @@ export const CurrentTags = styled.div`
 `;
 export const Tag = styled.div`
   color: #a48fe0;
-  border: 0.3px solid #566270;
+  border: 0.3px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding: 3px 8px;
   margin: 5px 5px;
