@@ -1,12 +1,13 @@
 import React from 'react';
 import * as S from '../../style';
-import JoinMemberStar from './JoinMemberStar';
+import Star from '../../../Default/Star';
+
 const JoinMemberContent = ({ user, img, star }) => {
   return (
     <S.ChattingJoinMemberContent>
       <S.ChattingJoinMemberImg src={img} />
       <p>{user}</p>
-      <JoinMemberStar star={star} />
+      <Star star={star} />
     </S.ChattingJoinMemberContent>
   );
 };

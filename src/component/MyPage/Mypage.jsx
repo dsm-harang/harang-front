@@ -6,6 +6,7 @@ import Modal from '../Modal';
 import Comment from './Comment';
 import AnotherComment from './AnotherCommnet';
 import * as S from './style';
+import { useEffect } from 'react';
 
 const MODAL_TYPE_REVIEW = 'review';
 const MODAL_TYPE_REQUEST = 'request';
@@ -40,7 +41,7 @@ const Mypage = () => {
     { text: '댓그으을', userName: '오준상', star: 5 },
   ]);
   const [reviewDataArray, reviewDataArrayChange] = useState([
-    { name: '오준상', src: DEFAULT_USER_IMG, star: 0, id: 1 },
+    { name: '오준상', src: DEFAULT_USER_IMG, star: 1, id: 1, review: '1' },
   ]);
   const [modalType, modalTypeChange] = useState('');
   const modalDelete = () => {
@@ -56,8 +57,12 @@ const Mypage = () => {
     modalTypeChange('ReportModal');
   });
   const setModalData = useCallback(() => {
+    console.log(modalType);
     if (modalType === 'RequestApproveModal') return requestDataArray;
-    if (modalType === 'ReviewModal') return reviewDataArray;
+    else if (modalType === 'ReviewModal') {
+      console.log(reviewDataArray[0]);
+      return reviewDataArray;
+    }
     return [];
   }, [requestDataArray, reviewDataArray, modalType]);
   const setModalDataChangeFunction = useCallback(() => {

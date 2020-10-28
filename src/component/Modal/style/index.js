@@ -1,11 +1,6 @@
 import styled from 'styled-components';
 import { checkbox_able, checkbox_disable } from '../../../assets/Modal';
-import {
-  fullStar,
-  emptyStar,
-  fiveEmptyStar,
-  fiveFullStar,
-} from '../../../assets/Mypage';
+import { fullStar, emptyStar } from '../../../assets/Mypage';
 
 export const ModalBackground = styled.div`
   width: 100%;
@@ -55,6 +50,7 @@ export const ReviewModal = styled(Modal)`
   height: 700px;
   padding: 40px;
   box-sizing: border-box;
+  position: relative;
 `;
 
 export const ReviewButton = styled.div`
@@ -135,18 +131,6 @@ export const RequestStarWrapper = styled.div`
   justify-content: center;
 `;
 
-export const ModalStarWrapper = styled.div`
-  background-image: url(${fiveEmptyStar});
-  width: 144px;
-  height: 22px;
-`;
-
-export const ModalStar = styled.div`
-  width: ${props => props.star * 20}%;
-  height: 100%;
-  background-image: url(${fiveFullStar});
-`;
-
 export const ReportModal = styled.div`
   width: 500px;
   height: 350px;
@@ -195,4 +179,56 @@ export const ModalDeleteWrapper = styled.div`
   align-items: center;
   padding: 0px 10px;
   box-sizing: border-box;
+`;
+
+export const ReviewModalContent = styled.div`
+  position: absolute;
+  display: ${props => (props.isAble ? 'block' : 'none')};
+  width: 500px;
+  height: 400px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: white;
+  z-index: 10;
+  left: 50%;
+  transform: translate(-50%);
+  box-shadow: 0px 1px 2px 0px #aaaaaa;
+  > div.wrapper {
+    display: flex;
+    > div {
+      padding: 10px;
+      box-sizing: border-box;
+    }
+  }
+`;
+
+export const ReviewModalContentTextArea = styled.textarea`
+  width: 100%;
+  height: 230px;
+  margin: 10px 0px;
+  background-color: #f1f1f1;
+  resize: none;
+  padding: 10px;
+  box-sizing: border-box;
+`;
+
+export const ReviewModalContentImg = styled.div`
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  border: 1px solid #f0f0f0;
+`;
+
+export const ReviewModalContentName = styled.p`
+  font-size: 20px;
+  margin-left: 10px;
+`;
+
+export const ReviewModalButton = styled.button`
+  width: 100%;
+  height: 40px;
+  color: white;
+  border: 0px;
+  margin: 10px 0px;
+  background-color: #a48fe0;
 `;

@@ -202,18 +202,6 @@ export const ChattingJoinMemberImg = styled.img`
   border-radius: 20px;
 `;
 
-export const ChattingStarWrapper = styled.div`
-  background-image: url(${fiveEmptyStar});
-  width: 144px;
-  height: 22px;
-`;
-
-export const ChattingStar = styled.div`
-  width: ${props => props.star * 20}%;
-  height: 100%;
-  background-image: url(${fiveFullStar});
-`;
-
 export const ChattingStarDiv = styled.div`
   display: inline-block;
 `;

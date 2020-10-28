@@ -1,20 +1,26 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ReviewModalContent from './ReviewModalContent';
 import * as S from '../../style';
 
 const ReviewModal = ({ requestData, dataChange, onDelete }) => {
-  const getStarChangedDataList = useCallback(
-    (id, star) => {
-      return requestData.map(data => {
-        const buffer = { ...data };
-        if (buffer.id === id) {
-          buffer.star = star;
-        }
-        return buffer;
-      });
-    },
-    [requestData],
-  );
+  const getStarChangedDataList = useCallback((requestData, id, star) => {
+    return requestData.map(data => {
+      const buffer = { ...data };
+      if (buffer.id === id) {
+        buffer.star = star;
+      }
+      return buffer;
+    });
+  }, []);
+  const getReviewChangedDataList = useCallback((requestData, id, review) => {
+    return requestData.map(data => {
+      const buffer = { ...data };
+      if (buffer.id === id) {
+        buffer.review = review;
+      }
+      return buffer;
+    });
+  }, []);
   const buttonClickHandler = useCallback(() => {
     onDelete();
   }, []);
@@ -23,7 +29,14 @@ const ReviewModal = ({ requestData, dataChange, onDelete }) => {
   });
   const setStarChangedDataListToState = useCallback(
     (id, star) => {
-      const buffer = getStarChangedDataList(id, star);
+      const buffer = getStarChangedDataList(requestData, id, star);
+      dataChange(buffer);
+    },
+    [requestData, dataChange],
+  );
+  const setReviewChangeDataListToState = useCallback(
+    (id, review) => {
+      const buffer = getReviewChangedDataList(requestData, id, review);
       dataChange(buffer);
     },
     [requestData, dataChange],
@@ -35,19 +48,27 @@ const ReviewModal = ({ requestData, dataChange, onDelete }) => {
     },
     [requestData, dataChange],
   );
-  const setContent = useCallback(() => {
-    return requestData.map(data => (
-      <ReviewModalContent
-        {...data}
-        dataChange={dataChange}
-        deleteData={setDeleteDataListToState}
-        starChange={setStarChangedDataListToState}
-      />
-    ));
-  }, [requestData]);
+  const setContent = useCallback(
+    requestData => {
+      return requestData.map(data => (
+        <ReviewModalContent
+          {...data}
+          key={data.id}
+          deleteData={setDeleteDataListToState}
+          starChange={setStarChangedDataListToState}
+          reviewChange={setReviewChangeDataListToState}
+        />
+      ));
+    },
+    [
+      setStarChangedDataListToState,
+      setReviewChangeDataListToState,
+      setDeleteDataListToState,
+    ],
+  );
   return (
     <S.ReviewModal>
-      <div>{setContent()}</div>
+      <div>{setContent(requestData)}</div>
       <S.RequestModalApproveButton onClick={buttonClickHandler}>
         리뷰 마치기
       </S.RequestModalApproveButton>

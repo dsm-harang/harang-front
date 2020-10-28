@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import RequestStar from './RequestStar';
+import Star from '../../../Default/Star';
 import * as S from '../../style';
 
 const RequestApproveModalContent = ({
@@ -16,7 +16,7 @@ const RequestApproveModalContent = ({
     <S.BoardContent>
       <S.BoardUserImg src={src} />
       <S.BoardContentText>{name}</S.BoardContentText>
-      <RequestStar star={star} />
+      <Star star={star} />
       <label>
         <input type="checkbox" onChange={inputChangeHandler} />
         <div />
