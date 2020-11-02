@@ -2,7 +2,13 @@ import React, { useCallback, useEffect } from 'react';
 import ReviewModalContent from './ReviewModalContent';
 import * as S from '../../style';
 
-const ReviewModal = ({ requestData, dataChange, onDelete }) => {
+const ReviewModal = ({
+  requestData,
+  dataChange,
+  onDelete,
+  modalId,
+  modalIdChange,
+}) => {
   const getStarChangedDataList = useCallback((requestData, id, star) => {
     return requestData.map(data => {
       const buffer = { ...data };
@@ -22,7 +28,8 @@ const ReviewModal = ({ requestData, dataChange, onDelete }) => {
     });
   }, []);
   const buttonClickHandler = useCallback(() => {
-    onDelete();
+    onDelete(modalId);
+    modalIdChange(-1);
   }, []);
   const getDeleteDataList = useCallback(id => {
     return requestData.filter(data => data.id !== id);
