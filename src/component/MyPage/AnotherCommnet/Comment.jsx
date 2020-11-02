@@ -11,6 +11,7 @@ const AnotherComment = ({ comments }) => {
           text={comment.text}
           userName={comment.userName}
           star={comment.star}
+          key={`${comment.userName}${comment.text}`}
         />
       );
     });

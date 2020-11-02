@@ -216,6 +216,14 @@ export const Comment = styled.div`
   }
 `;
 
+export const CommentNameAndStarWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  > div {
+    margin: 5px;
+  }
+`;
+
 export const AnotherPersonComment = styled.div`
   width: 600px;
   height: 700px;
