@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import * as S from '../style';
 import { Chatting } from './Chatting';
 import { JoinMember } from './JoinMember';
@@ -8,9 +8,12 @@ const ChattingContent = ({
   chattingMember,
   sendChatting,
 }) => {
+  const setHeaderName = useCallback(target => {
+    return target ? target.name : '채팅방이 없습니다.';
+  }, []);
   return (
     <S.ChattingMain>
-      <S.ChattingHeader>{target.name}</S.ChattingHeader>
+      <S.ChattingHeader>{setHeaderName(target)}</S.ChattingHeader>
       <div className="wrapper">
         <Chatting
           chattingLogList={chattingLogList}

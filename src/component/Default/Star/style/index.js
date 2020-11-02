@@ -11,4 +11,5 @@ export const Star = styled.div`
   width: ${props => props.star * 20}%;
   height: 100%;
   background-image: url(${fiveFullStar});
+  background-size: cover;
 `;
