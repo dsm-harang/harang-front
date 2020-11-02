@@ -10,3 +10,8 @@ export const getRequest = () =>
       'X-Refresh-Token': localStorage.getItem('accessToken'),
     },
   });
+
+export const getUrl = (url, params) => {
+  if (params === undefined) return url;
+  return `${url}/${params}`;
+};
