@@ -2,7 +2,13 @@ import React, { useCallback } from 'react';
 import RequestApproveModalContent from './RequestApproveModalContent';
 import * as S from '../../style';
 
-const RequestApproveModal = ({ requestData, dataChange, onDelete }) => {
+const RequestApproveModal = ({
+  requestData,
+  dataChange,
+  onDelete,
+  modalId,
+  modalIdChange,
+}) => {
   const setPersonChecked = useCallback(
     checkedId => {
       return requestData.map(data => {
@@ -23,7 +29,8 @@ const RequestApproveModal = ({ requestData, dataChange, onDelete }) => {
     [requestData],
   );
   const buttonClickHandler = useCallback(() => {
-    onDelete();
+    onDelete(modalId);
+    modalIdChange(-1);
   }, []);
   const setContent = useCallback(() => {
     return requestData.map(data => (
