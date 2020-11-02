@@ -9,6 +9,7 @@ const ReviewModalStar = ({ star, starChange }) => {
       buffer = [
         ...buffer,
         <S.FullStar
+          key={`ReviewFullModalStar${i}`}
           onClick={() => {
             starChange(i + 1);
           }}
@@ -16,7 +17,13 @@ const ReviewModalStar = ({ star, starChange }) => {
       ];
     }
     for (let i = star; i < 5; i++) {
-      buffer = [...buffer, <S.EmptyStar onClick={() => starChange(i + 1)} />];
+      buffer = [
+        ...buffer,
+        <S.EmptyStar
+          onClick={() => starChange(i + 1)}
+          key={`ReviewFullModalStar${i}`}
+        />,
+      ];
     }
     return buffer;
   }, [star, starChange]);
