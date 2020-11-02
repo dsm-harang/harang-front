@@ -3,7 +3,14 @@ import { RequestApproveModal, ReviewModal, ReportModal } from './Mypage';
 import ModalDeleteButton from './ModalDeleteButton';
 import * as S from './style';
 
-const Modal = ({ modalType, onDelete, data, dataChange }) => {
+const Modal = ({
+  modalType,
+  onDelete,
+  data,
+  dataChange,
+  modalId,
+  modalIdChange,
+}) => {
   const eventPreventHandler = useCallback(e => {
     e.stopPropagation();
   }, []);
@@ -18,6 +25,8 @@ const Modal = ({ modalType, onDelete, data, dataChange }) => {
                 requestData={data}
                 dataChange={dataChange}
                 onDelete={onDelete}
+                modalId={modalId}
+                modalIdChange={modalIdChange}
               />
             )}
             {modalType === 'ReviewModal' && (
@@ -25,6 +34,8 @@ const Modal = ({ modalType, onDelete, data, dataChange }) => {
                 requestData={data}
                 dataChange={dataChange}
                 onDelete={onDelete}
+                modalId={modalId}
+                modalIdChange={modalIdChange}
               />
             )}
             {modalType === 'ReportModal' && <ReportModal />}
