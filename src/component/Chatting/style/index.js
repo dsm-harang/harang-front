@@ -97,7 +97,7 @@ export const ChattingInputWrapper = styled.div`
 `;
 
 export const ChattingInput = styled.input`
-  width: 700px;
+  width: 800px;
   height: 40px;
   background-color: #f1f1f1;
   outline: none;
