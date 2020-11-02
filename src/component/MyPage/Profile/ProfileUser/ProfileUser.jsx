@@ -1,6 +1,6 @@
 import React from 'react';
 import ProfileUserImg from './ProfileUserImg';
-import ProfileStar from './ProfileStar';
+import Star from '../../../Default/Star';
 import * as S from '../../style';
 
 const Profile = ({ img, imgChange, userName, isMine }) => {
@@ -10,7 +10,7 @@ const Profile = ({ img, imgChange, userName, isMine }) => {
       <S.MypageProfileDataWrapper>
         <div>
           <S.MypageUserName>{userName}</S.MypageUserName>
-          <ProfileStar star={3} />
+          <Star star={3} />
         </div>
       </S.MypageProfileDataWrapper>
     </S.MypageUser>
