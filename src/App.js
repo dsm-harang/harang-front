@@ -1,9 +1,10 @@
 import React from "react";
-import MainPage from "./component/Main/MainPage";
+import SignUp from "./component/SignUp/SignUp";
+
 function App() {
   return (
     <div>
-      <MainPage />
+      <SignUp />
     </div>
   );
 }

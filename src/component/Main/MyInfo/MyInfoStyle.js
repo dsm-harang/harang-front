@@ -1,14 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  @font-face {
-    font-family: "S-CoreDream-3Light";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-  }
-
   cursor: pointer;
 
   font-family: "S-CoreDream-3Light";
@@ -23,13 +15,6 @@ export const Container = styled.div`
     height: 10rem;
     display: flex;
     align-items: center;
-  }
-  img {
-    margin-left: 20px;
-    border-radius: 100%;
-    background-color: gray;
-    width: 6em;
-    height: 6em;
   }
   .mypage {
     color: #8699af;
@@ -47,7 +32,13 @@ export const Container = styled.div`
     font-size: 0.8rem;
   }
 `;
-
+export const ProfileImg = styled.img`
+  margin-left: 20px;
+  border-radius: 100%;
+  background-color: gray;
+  width: 6em;
+  height: 6em;
+`;
 export const MyProfile = styled.div`
   display: flex;
   align-items: center;

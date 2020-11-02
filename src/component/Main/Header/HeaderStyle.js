@@ -2,13 +2,6 @@ import styled from "styled-components";
 
 export const TitleText = styled.a`
   cursor: pointer;
-  @font-face {
-    font-family: "S-CoreDream-6Bold";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-  }
   font-family: "S-CoreDream-6Bold";
   text-decoration: none;
   color: #a48fe0;
@@ -57,14 +50,6 @@ export const NavMenu = styled.nav`
 `;
 export const Menus = styled.a`
   cursor: pointer;
-  @font-face {
-    font-family: "S-CoreDream-3Light";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-  }
-
   font-family: "S-CoreDream-3Light";
   font-size: 1rem;
   margin: 10px 50px;

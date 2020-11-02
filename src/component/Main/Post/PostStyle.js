@@ -1,20 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  @font-face {
-    font-family: "S-CoreDream-3Light";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "S-CoreDream-6Bold";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-  }
   margin: 1rem 1rem;
   display: flex;
 `;
@@ -26,7 +12,7 @@ export const Sumnail = styled.img`
 `;
 export const Contents = styled.div`
   cursor: default;
-  width: 20rem;
+  width: 19rem;
   height: 15rem;
   border: 1px solid black;
   border-radius: 1rem;
@@ -53,7 +39,11 @@ export const Contents = styled.div`
     font-size: 0.8rem;
     display: flex;
     position: relative;
-    margin-top: 2rem;
+    margin-right: 8rem;
+  }
+  .date {
+    margin-top: 1.5rem;
+    font-size: 0.5rem;
   }
 `;
 export const Sides = styled.div`
@@ -65,17 +55,43 @@ export const Sides = styled.div`
     width: 6.5rem;
     height: 10rem;
     border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+      margin-top: 1rem;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 100%;
+      object-fit: cover;
+    }
+    p {
+      font-size: 0.8rem;
+      font-family: "S-CoreDream-3Light";
+      margin: 0.1rem;
+      color: white;
+    }
+    .gotoProfile {
+      font-size: 0.1rem;
+      font-family: "S-CoreDream-3Light";
+      margin-top: 1rem;
+      cursor: pointer;
+      color: white;
+    }
   }
   button {
-    background-color: #a48fe0;
+    font-family: "S-CoreDream-6Bold";
+    background-color: ${({ isMypost }) => (isMypost ? "#DB1313" : " #a48fe0")};
     width: 6.5rem;
     height: 4.5rem;
     margin-top: 0.5rem;
     border-radius: 1rem;
     border: none;
     outline: none;
+    color: white;
   }
 `;
 export const HashTag = styled.div`
   margin-right: 0.5rem;
+  margin-top: 3rem;
 `;

@@ -6,6 +6,7 @@ import {
   Stars,
   CurrentTags,
   Tag,
+  ProfileImg,
 } from "./MyInfoStyle";
 import { Cookies } from "react-cookie";
 import dummy from "./dummy/data.json";
@@ -24,7 +25,7 @@ const MyInfo = () => {
   return (
     <Container>
       <section>
-        <img src={userData.User_image}></img>
+        <ProfileImg src={userData.User_image}></ProfileImg>
         <div>
           <div>
             <MyProfile>

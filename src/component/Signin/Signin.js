@@ -5,11 +5,10 @@ import {
   InputLabel,
   SigninBtn,
   Background,
-} from "./SigninStyle";
+} from "./SignInStyle";
 import { createGlobalStyle } from "styled-components";
 import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { colors } from "@material-ui/core";
 const GlobalStyle = createGlobalStyle`
 	body {
 		padding: 0;
