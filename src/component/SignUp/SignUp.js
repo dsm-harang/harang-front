@@ -5,11 +5,10 @@ import {
   Title,
   WriteLabel,
   Name,
-  InputSet,
   Button,
 } from "./SignUpStyle";
 import { createGlobalStyle } from "styled-components";
-import axios from "axios";
+import ReactTooltip from "react-tooltip";
 const FontSetting = createGlobalStyle`
 body{
    @font-face {
@@ -28,28 +27,37 @@ body{
   }
 }`;
 const SignUp = () => {
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [authNum, setAuthNum] = useState("");
-
+  const [name, setName] = useState();
+  const [id, setId] = useState();
+  const [password, setPassword] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [authNum, setAuthNum] = useState();
+  const [agree, setAgree] = useState(false);
   const callAuthNum = (e) => {
     e.preventDefault();
   };
   const submitSignUp = async (e) => {
     e.preventDefault();
+    if (
+      name.length < 2 ||
+      id.length < 3 ||
+      password.length < 6 ||
+      !phoneNumber ||
+      !authNum
+    ) {
+      alert("잘못된 정보 입력입니다");
+      return;
+    }
+    if (!agree) {
+      alert("개인정보 수집 및 이용에 동의해 주세요.");
+      return;
+    }
     const userData = {
       id: id,
       password: password,
       name: name,
       phone_number: phoneNumber,
     };
-    await axios.post("./user", userData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
   };
   return (
     <form>
@@ -57,59 +65,56 @@ const SignUp = () => {
         <FontSetting />
         <Title>SIGN UP</Title>
         <SignUpBox>
-          <InputSet>
-            <Name>이름</Name>
-            <WriteLabel
-              value={name}
-              onChange={(e) => {
-                e.target.value = e.target.value.replace(" ", "");
-                return setName(e.target.value);
-              }}
-            />
-          </InputSet>
-          <InputSet>
-            <Name>아이디</Name>
-            <WriteLabel
-              value={id}
-              onChange={(e) => {
-                e.target.value = e.target.value.replace(" ", "");
-                return setId(e.target.value);
-              }}
-            />
-          </InputSet>
-          <InputSet>
-            <Name>비밀번호</Name>
-            <WriteLabel
-              value={password}
-              onChange={(e) => {
-                e.target.value = e.target.value.replace(" ", "");
-                return setPassword(e.target.value);
-              }}
-            />
-          </InputSet>
-          <InputSet>
-            <Name>휴대전화 번호</Name>
-            <WriteLabel
-              type="tel"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-            <Button width="10rem" height="3rem" onClick={callAuthNum}>
-              인증번호 전송
-            </Button>
-          </InputSet>
-          <InputSet>
-            <Name>인증번호</Name>
-            <WriteLabel
-              type="number"
-              value={authNum}
-              onChange={(e) => setAuthNum(e.target.value)}
-            />
-          </InputSet>
-          <InputSet>
+          <InputSet
+            type="text"
+            name="이름"
+            value={name}
+            onChange={setName}
+            id="name"
+            info="2글자 이상 작성해 주세요"
+          />
+          <InputSet
+            type="text"
+            name="아이디"
+            value={id}
+            onChange={setId}
+            id="id"
+            info="3글자 이상 작성해 주세요"
+          />
+          <InputSet
+            type="password"
+            name="비밀번호"
+            value={password}
+            onChange={setPassword}
+            id="password"
+            info="6글자 이상 작성해 주세요"
+          />
+          <InputSet
+            type="tel"
+            name="전화번호"
+            value={phoneNumber}
+            onChange={setPhoneNumber}
+            id="tel"
+          />
+          <Button width="10rem" height="3rem" onClick={callAuthNum}>
+            인증번호 전송
+          </Button>
+          <InputSet
+            type="text"
+            name="인증번호"
+            value={authNum}
+            onChange={setAuthNum}
+            id="auth"
+          />
+
+          <span>
             개인정보 수집 및 이용에 동의합니다
-            <input type="checkbox"></input>
-          </InputSet>
+            <input
+              type="checkbox"
+              value={agree}
+              onChange={(e) => setAgree(e.target.value)}
+            ></input>
+          </span>
           <Button
             type="submit"
             width="20rem"
@@ -124,3 +129,26 @@ const SignUp = () => {
   );
 };
 export default SignUp;
+
+const InputSet = ({ name, value, type, onChange, id, info }) => {
+  return (
+    <div style={{ width: "20rem" }}>
+      <Name>{name}</Name>
+      <WriteLabel
+        type={type}
+        value={value}
+        onChange={(e) => {
+          e.target.value = e.target.value.replace(" ", "");
+          return onChange(e.target.value);
+        }}
+        data-tip
+        data-for={id}
+      />
+      {info && (
+        <ReactTooltip id={id} type="info">
+          {info}
+        </ReactTooltip>
+      )}
+    </div>
+  );
+};

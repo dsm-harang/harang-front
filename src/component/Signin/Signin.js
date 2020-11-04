@@ -7,8 +7,8 @@ import {
   Background,
 } from "./SignInStyle";
 import { createGlobalStyle } from "styled-components";
-import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
 const GlobalStyle = createGlobalStyle`
 	body {
 		padding: 0;
@@ -21,15 +21,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const callApi = async (user) => {
-    alert(JSON.stringify(user));
-    const url = "/auth";
-    const config = {
-      method: "POST",
-      "context-Type": "application/json",
-    };
-    axios.post(url, user, config).then((respone) => {});
-  };
+  const callApi = (user) => {};
 
   const onSignin = (e) => {
     e.preventDefault();
@@ -68,6 +60,7 @@ const Login = () => {
                 value={id}
                 onChange={(e) => setId(e.target.value)}
               />
+
               <InputLabel
                 type="password"
                 placeholder="비밀번호"

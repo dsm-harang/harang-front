@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import React from "react";
 export const Container = styled.div`
   margin-top: 1rem;
   width: 100%;
@@ -39,9 +39,6 @@ export const WriteLabel = styled.input`
   font-family: "S-CoreDream-3Light";
 `;
 
-export const InputSet = styled.div`
-  width: 20rem;
-`;
 export const Button = styled.button`
   font-family: "S-CoreDream-3Light";
   margin: 1rem 0;
