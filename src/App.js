@@ -1,10 +1,16 @@
-import React from "react";
-import SignUp from "./component/SignUp/SignUp";
+
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Mypage, Chatting } from './component';
+
 function App() {
   return (
-    <div>
-      <SignUp></SignUp>{" "}
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/mypage" component={Mypage} />
+        <Route path="/chatting" component={Chatting} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
