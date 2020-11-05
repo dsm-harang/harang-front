@@ -1,7 +1,7 @@
-import React from "react";
-import { Posts } from "./PostContainerStyle";
-import { Container, Sumnail, Contents, Sides, HashTag } from "./PostStyle";
-import StarCounter from "../StarCounter";
+import React from 'react';
+
+import { Container, Sumnail, Contents, Sides, HashTag } from './PostStyle';
+import StarCounter from '../StarCounter';
 const Post = ({
   postData,
   setPostData,

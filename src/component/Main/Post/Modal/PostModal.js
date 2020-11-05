@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   Overlay,
   PostModalContainer,
   PostInfo,
   Contents,
-  CloseBtn,
-} from "./ModalStyle";
-import { createGlobalStyle } from "styled-components";
+  Sumnail,
+} from './ModalStyle';
+import { createGlobalStyle } from 'styled-components';
 const Global = createGlobalStyle`
 body{
   height:100%; min-height:100%; overflow:hidden !important; touch-action:none;
@@ -15,10 +15,10 @@ const PostModal = ({ postData, setPostVisible }) => {
   return (
     <div>
       <Global />
-      <Overlay onClick={(e) => setPostVisible(false)} />
+      <Overlay onClick={e => setPostVisible(false)} />
       <PostModalContainer>
         <PostInfo>
-          <img
+          <Sumnail
             className="sumnail"
             src="https://lh3.googleusercontent.com/proxy/9HFmXAjEI6sBb2srGLKe4PwobqdHyMd4YCLxa6j6kVWBNiIibjelwoN9Dwwep3VyXWSTi41luIL8xAxBPlSx8zDaAji5_wfkQhGxA3u-43oqytHJdWAmNawGDFyIG_erbUAp05XhE0qSrHpGGcpGMdvEcYSH"
           />

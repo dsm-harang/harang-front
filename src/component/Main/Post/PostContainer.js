@@ -1,38 +1,39 @@
-import React, { useState } from "react";
-import { Container, Posts } from "./PostContainerStyle";
-import Post from "./Post";
-import PostModal from "./Modal/PostModal";
-
+import React, { useState } from 'react';
+import { Container, Posts } from './PostContainerStyle';
+import Post from './Post';
+import PostModal from './Modal/PostModal';
+import WriteModal from './Modal/WriteModal';
 const dummy = [
   {
     post_id: 1,
-    title: "볼링",
-    content: "asdasd",
-    time: "2020-12-11",
-    loaction: "대전",
+    title: '볼링',
+    content: 'asdasd',
+    time: '2020-12-11',
+    loaction: '대전',
     age_limit: true,
     person_num: 5,
-    writer: "홍길동",
-    created_at: "2020-10-20",
+    writer: '홍길동',
+    created_at: '2020-10-20',
   },
   {
     post_id: 2,
-    title: "볼링",
-    content: "asdasd",
-    time: "2020-12-01",
-    loaction: "대전",
+    title: '볼링',
+    content: 'asdasd',
+    time: '2020-12-01',
+    loaction: '대전',
     age_limit: true,
     person_num: 5,
-    writer: "홍길동",
-    created_at: "2020-10-20",
+    writer: '홍길동',
+    created_at: '2020-10-20',
   },
 ];
 
 const PostContainer = () => {
   const [postVisible, setPostVisible] = useState(false);
-  const [postData, setPostData] = useState("");
+  const [postData, setPostData] = useState('');
   return (
     <Container>
+      {/* <WriteModal /> <PostModal postData={dummy[0]} setPostVisible={setPostVisible} /> */}
       {postVisible && (
         <PostModal postData={postData} setPostVisible={setPostVisible} />
       )}
