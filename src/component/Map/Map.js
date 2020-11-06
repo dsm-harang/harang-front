@@ -2,20 +2,44 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import * as S from './style';
 
-const Map = searchText => {
+const Map = ({ searchText, clickCallback }) => {
   const [map, mapChange] = useState();
+  const [location, locationChange] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
   var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
   useEffect(() => {
-    setKakaoMap(kakao);
+    getLocation();
   }, []);
   useEffect(() => {
-    searchAddress(kakao, '구미 신평동 영무예다음');
-  }, [map]);
+    setKakaoMap(kakao, location);
+  }, [location]);
+  useEffect(() => {
+    searchAddress(kakao, searchText);
+  }, [searchText]);
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords }) => {
+          locationChange(coords);
+        },
+        error => console.log(error),
+        {
+          enableHighAccuracy: false,
+          maximumAge: 0,
+          timeout: Infinity,
+        },
+      );
+    } else {
+      alert('GPS를 지원하지 않습니다');
+    }
+  };
   const setKakaoMap = useCallback(
-    ({ maps }) => {
+    ({ maps }, location) => {
       const mapContainer = document.getElementById('searchMap');
       const mapOption = {
-        center: new maps.LatLng(33.450701, 126.570667),
+        center: new maps.LatLng(location.latitude, location.longitude),
         level: 3,
       };
       const map = new maps.Map(mapContainer, mapOption);
@@ -25,24 +49,22 @@ const Map = searchText => {
   );
   const searchAddress = useCallback(
     ({ maps }, searchText) => {
-      const searchObj = new maps.services.Places();
-      searchObj.keywordSearch(searchText, searchAddressCallback);
+      if (isMapLoaded(map)) {
+        const searchObj = new maps.services.Places();
+        searchObj.keywordSearch(searchText, searchAddressCallback);
+      }
     },
     [map],
   );
   const searchAddressCallback = useCallback(
     (data, status, pagination) => {
-      console.log(map);
-      if (isMapLoaded(map)) {
-        if (status === kakao.maps.services.Status.OK) {
-          var bounds = new kakao.maps.LatLngBounds();
-
-          for (var i = 0; i < data.length; i++) {
-            displayMarker(data[i]);
-            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-          }
-          map.setBounds(bounds);
+      if (status === kakao.maps.services.Status.OK) {
+        var bounds = new kakao.maps.LatLngBounds();
+        for (var i = 0; i < data.length; i++) {
+          displayMarker(data[i]);
+          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
+        map.setBounds(bounds);
       }
     },
     [map],
@@ -56,7 +78,6 @@ const Map = searchText => {
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
       });
-      console.log(map, marker);
       kakao.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(
           '<div style="padding:5px;font-size:12px;">' +
@@ -64,6 +85,7 @@ const Map = searchText => {
             '</div>',
         );
         infowindow.open(map, marker);
+        clickCallback(`${place.address_name}${place.place_name}`);
       });
     },
     [map],
