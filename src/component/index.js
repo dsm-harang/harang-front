@@ -1,3 +1,4 @@
 import { Mypage } from './MyPage';
 import { Chatting } from './Chatting';
-export { Mypage, Chatting };
+import { Map } from './Map';
+export { Mypage, Chatting, Map };
