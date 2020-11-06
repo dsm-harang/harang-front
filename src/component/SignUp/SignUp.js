@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Container,
   SignUpBox,
@@ -6,11 +7,13 @@ import {
   WriteLabel,
   Name,
   Button,
+  ProfileImage,
 } from './SignUpStyle';
 import { createGlobalStyle } from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 import { getRequest } from '../../lib/api/api';
 import { USER_URL } from '../../lib/api/ServerUrl';
+
 const FontSetting = createGlobalStyle`
 body{
    @font-face {
@@ -33,23 +36,30 @@ const SignUp = () => {
   const [name, setName] = useState();
   const [id, setId] = useState();
   const [password, setPassword] = useState();
-  const [phoneNumber, setPhoneNumber] = useState();
+  const [passwordConfrim, setPasswordConfrim] = useState();
   const [age, setAge] = useState();
-  const [authNum, setAuthNum] = useState();
   const [agree, setAgree] = useState(false);
-  const callAuthNum = e => {
-    e.preventDefault();
+  const [file, setFile] = useState();
+  const [fileResult, setFileResult] = useState();
+  const [phoneNum, setPhoneNum] = useState();
+  const history = useHistory();
+  const uploadImage = e => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    setFile(e.target.files[0]);
+    reader.onload = e => {
+      setFileResult(e.target.result);
+    };
   };
-  const submitSignUp = async e => {
+
+  const submitSignUp = e => {
     e.preventDefault();
-    if (
-      name.length < 2 ||
-      id.length < 3 ||
-      password.length < 6 ||
-      !phoneNumber ||
-      !authNum
-    ) {
+    if (name.length < 2 || id.length < 3 || password.length < 6 || !age) {
       alert('잘못된 정보 입력입니다');
+      return;
+    }
+    if (password !== passwordConfrim) {
+      alert('비밀번호를 다시 확인해 주세요');
       return;
     }
     if (!agree) {
@@ -57,15 +67,18 @@ const SignUp = () => {
       return;
     }
     const userData = new FormData();
-    userData.append('id', id);
+    userData.append('userId', id);
     userData.append('password', password);
     userData.append('name', name);
-    userData.append('phone_number', phoneNumber);
+    userData.append('age', age);
+    userData.append('image', file);
+    userData.append('phoneNumber', phoneNum);
+    userData.append('intro', '');
 
     getRequest()
       .post(USER_URL, userData)
-      .then(res => alert(res))
-      .catch(err => console.log);
+      .then(history.push({ pathname: '/login' }))
+      .catch();
   };
   return (
     <form>
@@ -73,6 +86,8 @@ const SignUp = () => {
         <FontSetting />
         <Title>SIGN UP</Title>
         <SignUpBox>
+          <ProfileImage profile={fileResult} />
+          <input type="file" files={file} onChange={uploadImage} />
           <InputSet
             type="text"
             name="이름"
@@ -80,6 +95,13 @@ const SignUp = () => {
             onChange={setName}
             id="name"
             info="2글자 이상 작성해 주세요"
+          />
+          <InputSet
+            type="number"
+            name="나이"
+            value={age}
+            onChange={setAge}
+            id="age"
           />
           <InputSet
             type="text"
@@ -97,28 +119,23 @@ const SignUp = () => {
             id="password"
             info="6글자 이상 작성해 주세요"
           />
-
+          <InputSet
+            type="password"
+            name="비밀번호 확인"
+            value={passwordConfrim}
+            onChange={setPasswordConfrim}
+          />
           <InputSet
             type="tel"
-            name="전화번호"
-            value={phoneNumber}
-            onChange={setPhoneNumber}
-            id="tel"
-          />
-          <Button width="10rem" height="3rem" onClick={callAuthNum}>
-            인증번호 전송
-          </Button>
-          <InputSet
-            type="number"
-            name="인증번호"
-            value={authNum}
-            onChange={setAuthNum}
-            id="auth"
+            name="휴대전화 번호"
+            value={phoneNum}
+            onChange={setPhoneNum}
           />
 
           <span>
             개인정보 수집 및 이용에 동의합니다
             <input
+              style={{ margin: '1rem 0' }}
               type="checkbox"
               value={agree}
               onChange={e => setAgree(e.target.value)}

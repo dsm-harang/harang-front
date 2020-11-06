@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const TitleText = styled.a`
   cursor: pointer;
-  font-family: "S-CoreDream-6Bold";
+  font-family: 'S-CoreDream-6Bold';
   text-decoration: none;
   color: #a48fe0;
   font-size: 3rem;
@@ -49,8 +49,9 @@ export const NavMenu = styled.nav`
   margin: 0 20px;
 `;
 export const Menus = styled.a`
+  width: 80px;
   cursor: pointer;
-  font-family: "S-CoreDream-3Light";
+  font-family: 'S-CoreDream-3Light';
   font-size: 1rem;
   margin: 10px 50px;
   &:hover {

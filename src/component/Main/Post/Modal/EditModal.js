@@ -7,11 +7,8 @@ import {
   PostButton,
   Global,
 } from './ModalStyle';
-import { createGlobalStyle } from 'styled-components';
 
-const WriteModal = ({ setWritingVisible }) => {
-  const reader = new FileReader();
-
+const EditModal = ({ setEditVisible }) => {
   const [sumnailName, setSumnailName] = useState();
   const [sumnailFile, setSumnailFile] = useState();
   const [sumnail, setSumnail] = useState();
@@ -25,22 +22,11 @@ const WriteModal = ({ setWritingVisible }) => {
     console.log(e.target.value);
     SetDate(e.target.value);
   };
-  const readImg = e => {
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = function (e) {
-      setSumnail(e.target.result);
-    };
-  };
-
+  const editSubmit = () => {};
   return (
     <div>
       <Global />
-      <Overlay
-        onClick={e => {
-          setWritingVisible(false);
-          console.log('a');
-        }}
-      />
+      <Overlay onClick={e => setEditVisible(false)} />
       <WriteModalContainer sumnail={sumnail} bg="#A48FE0">
         <InputLabel
           className="sumnail"
@@ -50,7 +36,6 @@ const WriteModal = ({ setWritingVisible }) => {
           onChange={e => {
             setSumnailName(e.target.value);
             setSumnailFile(e.target.files[0]);
-            readImg(e);
           }}
         />
         <InputLabel
@@ -75,9 +60,11 @@ const WriteModal = ({ setWritingVisible }) => {
         />
         <InputLabel className="Personnel" placeholder="인원" />
         <InputLabel className="tag" placeholder="태그" />
-        <PostButton className="button">게시하기</PostButton>
+        <PostButton className="button" type="submit">
+          수정하기
+        </PostButton>
       </WriteModalContainer>
     </div>
   );
 };
-export default WriteModal;
+export default EditModal;

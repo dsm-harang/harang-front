@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
@@ -11,7 +11,7 @@ export const Container = styled.div`
     padding: 1rem 1rem;
     background-color: #566270;
     color: #fffff3;
-    font-family: "S-CoreDream-3Light";
+    font-family: 'S-CoreDream-3Light';
   }
 `;
 export const Posts = styled.div`
@@ -19,4 +19,25 @@ export const Posts = styled.div`
   margin-top: 3rem;
   display: flex;
   flex-wrap: wrap;
+`;
+
+export const WriteButton = styled.button`
+  width: 6rem;
+  height: 6rem;
+
+  position: fixed;
+  right: 4rem;
+  bottom: 4rem;
+
+  background-color: #a48fe0;
+  border-radius: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-family: 'S-CoreDream-3Light';
+  font-size: 1.3rem;
+  color: #fffff3;
 `;

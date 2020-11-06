@@ -1,5 +1,23 @@
 import styled from 'styled-components';
-
+import { createGlobalStyle } from 'styled-components';
+export const Global = createGlobalStyle`
+body{
+  @font-face {
+    font-family: "S-CoreDream-3Light";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "S-CoreDream-6Bold";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  height:100%; min-height:100%; overflow:hidden !important; touch-action:none;
+}`;
 export const Overlay = styled.div`
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
@@ -39,7 +57,7 @@ export const Contents = styled.div`
   height: 100%;
 `;
 
-export const WriteModalContainer = styled.div`
+export const WriteModalContainer = styled.form`
   position: fixed;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

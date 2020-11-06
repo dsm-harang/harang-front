@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { CookiesProvider } from "react-cookie";
-import Mainheader from "./Header/MainHeader";
-import Slide from "./Slide/Slide";
-import MyInfo from "./MyInfo/MyInfo";
-import PostContainer from "./Post/PostContainer";
-import { createGlobalStyle } from "styled-components";
+import React, { useState } from 'react';
+import Mainheader from './Header/MainHeader';
+import Slide from './Slide/Slide';
+import MyInfo from './MyInfo/MyInfo';
+import PostContainer from './Post/PostContainer';
+import { createGlobalStyle } from 'styled-components';
+import { useHistory } from 'react-router-dom';
 const FontSetting = createGlobalStyle`
 body{
    @font-face {
@@ -24,13 +24,13 @@ body{
 }`;
 const MainPage = () => {
   return (
-    <CookiesProvider>
+    <>
       <FontSetting />
       <Mainheader />
       <Slide />
       <MyInfo />
       <PostContainer />
-    </CookiesProvider>
+    </>
   );
 };
 
