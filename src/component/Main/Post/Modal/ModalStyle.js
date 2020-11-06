@@ -72,10 +72,11 @@ export const WriteModalContainer = styled.form`
 
   align-items: end;
   justify-items: left;
-
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
   input,
   textarea {
-    width: 91%;
+    width: 650px;
     font-family: 'S-CoreDream-3Light';
   }
   .sumnail {
@@ -92,34 +93,36 @@ export const WriteModalContainer = styled.form`
     cursor: pointer;
   }
   .title {
-    margin-left: 1rem;
     font-family: 'S-CoreDream-6Bold';
     grid-column: span 3;
-    height: 70%;
-    padding: 0 1rem;
-    margin-bottom: 2rem;
+    height: 100%;
+    padding: 0 5px;
+    font-size: 1rem;
   }
   .content {
-    margin-left: 1rem;
     grid-column: span 3;
     grid-row: span 2;
-    height: 90%;
-    padding: 1rem 1rem;
+    height: 95%;
+    padding: 5px 5px;
     resize: none;
   }
-  .map {
-    grid-row: span 4;
-    grid-column: span 2;
-  }
 
+  .map,
   .time,
   .Personnel,
   .tag,
   button {
     grid-column: span 2;
-    width: 90%;
+    padding: 0 3px;
+    width: 430px;
     height: 60%;
-    padding: 0 1rem;
+  }
+  .map,
+  button {
+    height: 100%;
+  }
+  button {
+    width: 436px;
   }
 `;
 export const PostButton = styled.button`
@@ -146,4 +149,31 @@ export const ContentBox = styled.textarea`
   border: none;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
   width: 80%;
+`;
+export const TagContainer = styled.ul`
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  width: 430px;
+  height: 60%;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
+  input {
+    width: 100%;
+    height: 100%;
+    padding: 0 3px;
+  }
+`;
+export const TagItem = styled.div`
+  max-width: 70px;
+  height: 15px;
+  font-size: 15px;
+  margin-right: 10px;
+  padding: 1px 2px;
+
+  color: #fffff3;
+  background-color: #a48fe0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

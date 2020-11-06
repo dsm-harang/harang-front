@@ -6,8 +6,10 @@ import {
   ContentBox,
   PostButton,
   Global,
+  TagContainer,
+  TagItem,
 } from './ModalStyle';
-import { createGlobalStyle } from 'styled-components';
+import Map from '../../../Map/Map';
 
 const WriteModal = ({ setWritingVisible }) => {
   const reader = new FileReader();
@@ -18,7 +20,30 @@ const WriteModal = ({ setWritingVisible }) => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
   const [date, SetDate] = useState();
+  const [address, setAddress] = useState();
+  const [tagItems, setTagItems] = useState([]);
+  const [tagInput, setTagInput] = useState();
 
+  const InputHashTags = e => {
+    if (e.keyCode !== 32) return;
+    if (tagItems.length >= 5) {
+      setTagInput('');
+      return;
+    }
+    const items = tagInput.split(' ');
+    setTagItems(tagItems.concat('#' + items[items.length - 1]));
+    console.log(tagItems);
+    setTagInput('');
+  };
+  const removeTags = e => {
+    const index = e.target.id;
+    setTagItems(
+      tagItems.filter((e, i) => {
+        console.log(index + ',' + i);
+        if (i != index) return e;
+      }),
+    );
+  };
   const dateLimit = e => {
     const today = new Date();
     console.log(today);
@@ -31,7 +56,7 @@ const WriteModal = ({ setWritingVisible }) => {
       setSumnail(e.target.result);
     };
   };
-
+  const submitPost = () => {};
   return (
     <div>
       <Global />
@@ -65,7 +90,8 @@ const WriteModal = ({ setWritingVisible }) => {
           value={content}
           onChange={e => setContent(e.target.value)}
         />
-        <InputLabel className="map" placeholder="title" />
+        <Map searchText={address} clickCallback={e => setAddress(e)} />
+
         <InputLabel
           className="time"
           type="date"
@@ -73,9 +99,30 @@ const WriteModal = ({ setWritingVisible }) => {
           value={date}
           onChange={dateLimit}
         />
-        <InputLabel className="Personnel" placeholder="인원" />
-        <InputLabel className="tag" placeholder="태그" />
-        <PostButton className="button">게시하기</PostButton>
+        <InputLabel className="Personnel" placeholder="인원" type="number" />
+        <TagContainer className="tag">
+          {tagItems.map((e, i) => (
+            <TagItem key={i} id={i} onClick={removeTags}>
+              {e}
+            </TagItem>
+          ))}
+          <input
+            placeholder="태그"
+            value={tagInput}
+            onChange={e => setTagInput(e.target.value)}
+            onKeyDown={InputHashTags}
+          ></input>
+        </TagContainer>
+        <InputLabel
+          className="map"
+          type="text"
+          placeholder="주소"
+          value={address}
+          onChange={e => setAddress(e.target.value)}
+        />
+        <PostButton className="button" type="submit">
+          게시하기
+        </PostButton>
       </WriteModalContainer>
     </div>
   );
