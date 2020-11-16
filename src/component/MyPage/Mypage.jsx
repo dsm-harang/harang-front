@@ -22,7 +22,7 @@ const DEFAULT_USER_IMG =
 const Mypage = () => {
   const location = useLocation();
   const [id, idChange] = useState(location.pathname.split('/')[2]);
-  const [isMine, isMineChange] = useState(true);
+  const [isMine, isMineChange] = useState(false);
   const [noticeArray, noticeArrayChange] = useState([
     { text: '리뷰를 작성해 주세요.', id: 1, type: MODAL_TYPE_REVIEW },
   ]);
@@ -81,6 +81,7 @@ const Mypage = () => {
       const { data } = await getUserInfo(id);
       imgChange(data.imagepath);
       userNameChange(data.name);
+      idChange(data.user_id);
     } catch (error) {
       console.log(error);
     }
@@ -157,10 +158,17 @@ const Mypage = () => {
   );
   useEffect(() => {
     getUserInfoAndSetState();
-    getAlarmAndSetState();
-    getCommentAndSetState();
-    getRecodeAndSetState();
   }, []);
+  useEffect(() => {
+    if (id) {
+      isMineChange(false);
+      getAlarmAndSetState();
+      getCommentAndSetState();
+      getRecodeAndSetState();
+    } else {
+      isMineChange(true);
+    }
+  }, [id]);
   return (
     <>
       <Modal
