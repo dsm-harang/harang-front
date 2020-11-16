@@ -1,6 +1,6 @@
 import IO from 'socket.io-client';
 import { SERVER_URL, getRequest, getUrl } from './api';
-import { ROOM_URL } from './ServerUrl';
+import { ROOM_URL, ROOMS_URL } from './ServerUrl';
 
 class Socket {
   constructor() {
@@ -8,12 +8,12 @@ class Socket {
     this.IO = IO(chattingUrl);
   }
   sendChatting(text) {
-    this.IO.emit('chat');
+    this.IO.emit('send');
   }
 }
 
 export const getChattingList = id => {
-  const url = getUrl(ROOM_URL, id);
+  const url = getUrl(ROOMS_URL, id);
   return getRequest().get(url);
 };
 
