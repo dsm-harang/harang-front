@@ -76,6 +76,10 @@ const Post = ({
             setPostId(postId);
           }}
         >
+          <i
+            class="fas fa-exclamation-triangle"
+            style={{ fontSize: '10px', marginRight: '5px' }}
+          ></i>
           신고하기
         </ReportButton>
         <p className="date">{createdAt}에 올라온 글입니다</p>

@@ -3,14 +3,15 @@ import Mainheader from './Header/MainHeader';
 import Slide from './Slide/Slide';
 import MyInfo from './MyInfo/MyInfo';
 import PostContainer from './Post/PostContainer';
-
+import { getRequest } from '../../lib/api/api';
 const MainPage = () => {
+  const myData = getRequest().get('/mypage');
   return (
     <>
       <Mainheader />
       <Slide />
-      <MyInfo />
-      <PostContainer />
+      <MyInfo myData={myData} />
+      <PostContainer myData={myData} />
     </>
   );
 };

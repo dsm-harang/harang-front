@@ -43,6 +43,9 @@ const MainHeader = () => {
           <SearchBox
             value={search}
             onChange={e => setSearch(e.target.value)}
+            onKeyDown={e => {
+              if (e.keyCode == 13) saveCurSearch();
+            }}
           ></SearchBox>
           <SearchIcon
             onClick={saveCurSearch}

@@ -6,7 +6,7 @@ import { getRequest } from '../../../lib/api/api';
 import EditModal from './Modal/EditModal';
 import WriteModal from './Modal/WriteModal';
 import ReportModal from './Modal/ReportModal';
-const PostContainer = () => {
+const PostContainer = ({ myData }) => {
   const [postVisible, setPostVisible] = useState(false);
   const [writingVisible, setWritingVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
@@ -65,26 +65,28 @@ const PostContainer = () => {
       )}
       <div className="header">최근 모집하는 모임</div>
       <Posts>
-        {Array.prototype.map.call(dummy, (e, i) => (
-          <Post
-            setPostVisible={setPostVisible}
-            setEditVisible={setEditVisible}
-            setReportVisible={setReportVisible}
-            postId={e.post_id}
-            key={i}
-            title={e.title}
-            content={e.content}
-            meetTime={e.meetTime}
-            address={e.address}
-            ageLimit={e.ageLimit}
-            writer={e.writer}
-            createdAt={e.createdAt}
-            personnel={e.personnel}
-            imageName={e.imageName}
-            setPostId={setPostId}
-            isMyPost={e.isMyPost}
-          />
-        ))}
+        {Array.prototype.map.call(dummy, (e, i) => {
+          return (
+            <Post
+              setPostVisible={setPostVisible}
+              setEditVisible={setEditVisible}
+              setReportVisible={setReportVisible}
+              postId={e.post_id}
+              key={i}
+              title={e.title}
+              content={e.content}
+              meetTime={e.meetTime}
+              address={e.address}
+              ageLimit={e.ageLimit}
+              writer={e.writer}
+              createdAt={e.createdAt}
+              personnel={e.personnel}
+              imageName={e.imageName}
+              setPostId={setPostId}
+              isMyPost={e.isMyPost}
+            />
+          );
+        })}
       </Posts>
     </Container>
   );

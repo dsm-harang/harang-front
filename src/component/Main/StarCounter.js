@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-const starCounter = (score) => {
+const starCounter = score => {
   const stars = [];
-  const fullStars = parseInt(score / 1);
+  const fullStars = parseInt(score);
   const halfStars = score % 1 !== 0;
   const emptyStars = 5 - (halfStars + fullStars);
 

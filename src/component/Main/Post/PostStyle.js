@@ -140,4 +140,5 @@ export const ReportButton = styled.button`
   height: 1rem;
   background-color: white;
   color: red;
+  text-align: center;
 `;

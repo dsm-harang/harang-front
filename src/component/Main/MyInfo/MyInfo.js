@@ -9,13 +9,11 @@ import {
   ProfileImg,
 } from './MyInfoStyle';
 import { Cookies } from 'react-cookie';
-import dummy from './dummy/data.json';
 import StarCounter from '../StarCounter';
 import { useHistory, Link } from 'react-router-dom';
 
-const MyInfo = () => {
+const MyInfo = ({ myData }) => {
   const history = useHistory();
-  const userData = dummy.data;
   const score = 2.5;
   const stars = StarCounter(score);
   const createTag = () => {
@@ -38,11 +36,11 @@ const MyInfo = () => {
   return (
     <Container>
       <section>
-        <ProfileImg src={userData.User_image}></ProfileImg>
+        <ProfileImg src={myData.imagepath}></ProfileImg>
         <div>
           <div>
             <MyProfile>
-              <UserName>{userData.User_name}님</UserName>
+              <UserName>{myData.name}님</UserName>
               <Link to="/mypage" className="mypage">
                 마이페이지
               </Link>
@@ -56,7 +54,7 @@ const MyInfo = () => {
           <p className="alarm">알림 0</p>
         </div>
         <CurrentTags>
-          <p className="tagTitle">최근 검색한 태그</p>
+          <p className="tagTitle">최근 검색어</p>
           <div className="tags">
             {tags &&
               tags.map(e => {
@@ -70,7 +68,7 @@ const MyInfo = () => {
                       })
                     }
                   >
-                    #{e}
+                    {e}
                   </Tag>
                 );
               })}
