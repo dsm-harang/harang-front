@@ -5,7 +5,7 @@ import {
   InputLabel,
   SigninBtn,
   Background,
-} from './SignInStyle';
+} from './SigninStyle';
 import { createGlobalStyle } from 'styled-components';
 import { getRequest } from '../../lib/api/api';
 import { useHistory } from 'react-router-dom';

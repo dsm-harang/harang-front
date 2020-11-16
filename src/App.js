@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Mypage, Chatting } from './component';
 import SignUp from './component/SignUp/SignUp';
 import MainPage from './component/Main/MainPage';
-import SignIn from './component/SignIn/SignIn';
+import SignIn from './component/Signin/Signin';
 import SearchPage from './component/Main/SearchPage';
 import { createGlobalStyle } from 'styled-components';
 
