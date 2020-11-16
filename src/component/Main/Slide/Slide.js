@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   SlideImg,
   Container,
   Image,
   CircleBtn,
   BtnContainer,
-} from "./SlideStyle";
-import img from "../images/image01.png";
+} from './SlideStyle';
+import img from '../images/image01.png';
 const Slide = () => {
-  const totalSlide = 2;
   const [curSlide, setCurSlide] = useState(0);
+  const images = [img];
+  const totalSlide = images.length - 1;
 
   function setBnt(e) {
     setCurSlide(parseInt(e.target.value));
@@ -28,15 +29,21 @@ const Slide = () => {
     <div>
       <Container>
         <SlideImg num={curSlide}>
-          <Image src={img}></Image>
-          <Image src={img}></Image>
-          <Image src={img}></Image>
+          {images.map(e => {
+            return <Image src={e}></Image>;
+          })}
         </SlideImg>
 
         <BtnContainer id="buttons">
-          <CircleBtn curSlide={curSlide} value={0} onClick={setBnt}></CircleBtn>
-          <CircleBtn curSlide={curSlide} value={1} onClick={setBnt}></CircleBtn>
-          <CircleBtn curSlide={curSlide} value={2} onClick={setBnt}></CircleBtn>
+          {images.map((e, i) => {
+            return (
+              <CircleBtn
+                curSlide={curSlide}
+                value={i}
+                onClick={setBnt}
+              ></CircleBtn>
+            );
+          })}
         </BtnContainer>
       </Container>
     </div>

@@ -42,6 +42,7 @@ const SignUp = () => {
   const [file, setFile] = useState();
   const [fileResult, setFileResult] = useState();
   const [phoneNum, setPhoneNum] = useState();
+
   const history = useHistory();
   const uploadImage = e => {
     const reader = new FileReader();
@@ -132,13 +133,13 @@ const SignUp = () => {
             onChange={setPhoneNum}
           />
 
-          <span>
+          <span onClick={e => setAgree(!agree)} style={{ cursor: 'pointer' }}>
             개인정보 수집 및 이용에 동의합니다
             <input
-              style={{ margin: '1rem 0' }}
+              style={{ margin: '1rem 1rem' }}
               type="checkbox"
-              value={agree}
-              onChange={e => setAgree(e.target.value)}
+              checked={agree}
+              onClick={e => setAgree(e.target.checked)}
             ></input>
           </span>
           <Button

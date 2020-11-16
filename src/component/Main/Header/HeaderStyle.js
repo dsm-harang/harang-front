@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export const TitleText = styled.a`
+export const TitleText = styled(Link)`
   cursor: pointer;
   font-family: 'S-CoreDream-6Bold';
   text-decoration: none;
@@ -48,9 +49,11 @@ export const NavMenu = styled.nav`
   height: 100%;
   margin: 0 20px;
 `;
-export const Menus = styled.a`
+export const Menus = styled(Link)`
   width: 80px;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
   font-family: 'S-CoreDream-3Light';
   font-size: 1rem;
   margin: 10px 50px;

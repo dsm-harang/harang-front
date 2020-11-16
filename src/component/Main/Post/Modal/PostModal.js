@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getRequest } from '../../../../lib/api/api';
 import {
   Overlay,
   PostModalContainer,
@@ -8,7 +9,30 @@ import {
   Global,
 } from './ModalStyle';
 
-const PostModal = ({ setPostVisible }) => {
+const PostModal = ({ setPostVisible, postId }) => {
+  const reader = new FileReader();
+  const [postData, setPostData] = useState({
+    title: 'TITLE',
+    content: 'content',
+    meetTime: '2020-01-19',
+    address: '대덕소프트웨어 마이스터 고등학교',
+    personnel: 3,
+  });
+  const [sumnail, setSumnail] = useState();
+
+  useEffect(() => {
+    getRequest()
+      .get(`/post/${postId}`)
+      .then(res => setPostData(res.data));
+  }, []);
+
+  // const readImg = () => {
+  //   reader.readAsDataURL(postData.image);
+  //   reader.onload = function (e) {
+  //     setSumnail(e.target.result);
+  //   };
+  // };
+
   return (
     <div>
       <Global />
@@ -17,22 +41,26 @@ const PostModal = ({ setPostVisible }) => {
         <PostInfo>
           <Sumnail
             className="sumnail"
-            src="https://lh3.googleusercontent.com/proxy/9HFmXAjEI6sBb2srGLKe4PwobqdHyMd4YCLxa6j6kVWBNiIibjelwoN9Dwwep3VyXWSTi41luIL8xAxBPlSx8zDaAji5_wfkQhGxA3u-43oqytHJdWAmNawGDFyIG_erbUAp05XhE0qSrHpGGcpGMdvEcYSH"
+            // files={postData.image}
+            // Sumnail={sumnail}
           />
           <div className="info">
-            <p className="title"></p>
+            <p className="title">{postData.title}</p>
             <div className="time">
               <i className="fas fa-clock"></i>
+              {postData.meetTime}
             </div>
             <div className="location">
               <i className="fas fa-map-marker-alt"></i>
+              {postData.address}
             </div>
             <div className="Personnel">
               <i className="fas fa-user-friends"></i>
+              {postData.personnel}
             </div>
           </div>
         </PostInfo>
-        <Contents></Contents>
+        <Contents>{postData.content}</Contents>
       </PostModalContainer>
     </div>
   );

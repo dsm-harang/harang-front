@@ -6,27 +6,50 @@ import {
   Sides,
   HashTag,
   Button,
+  ReportButton,
 } from './PostStyle';
 import StarCounter from '../StarCounter';
+import { getRequest } from '../../../lib/api/api';
+
 const Post = ({
   setPostVisible,
   setEditVisible,
+  setReportVisible,
+  setPostId,
+  postId,
   title,
   content,
   meetTime,
   address,
   writer,
   createdAt,
+  personnel,
+  imageName,
+  isMyPost,
 }) => {
+  const applicationSubmit = () => {
+    getRequest().post(`post/${postId}`);
+  };
+  const deletePost = () => {
+    getRequest().delete(`/post/${postId}`);
+  };
+  const gotoProfile = () => {
+    getRequest().delete(`/mypage/`);
+  };
+
   return (
     <Container>
-      <Sumnail src="https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png" />
-      <Contents
-        onClick={() => {
-          setPostVisible(true);
-        }}
-      >
-        <div className="title">{title}</div>
+      <Sumnail src={imageName} />
+      <Contents>
+        <div
+          className="title"
+          onClick={() => {
+            setPostVisible(true);
+            setPostId(postId);
+          }}
+        >
+          {title}
+        </div>
         <div className="content">{content}</div>
         <div className="info">
           <div className="time">
@@ -39,7 +62,7 @@ const Post = ({
           </div>
           <div className="Personnel">
             <i className="fas fa-user-friends"></i>
-            {}명
+            {personnel}명
           </div>
         </div>
         <div className="tags">
@@ -47,30 +70,46 @@ const Post = ({
           <HashTag>#tag</HashTag>
           <HashTag>#tag</HashTag>
         </div>
-        <p className="date">{createdAt}</p>
+        <ReportButton
+          onClick={e => {
+            setReportVisible(true);
+            setPostId(postId);
+          }}
+        >
+          신고하기
+        </ReportButton>
+        <p className="date">{createdAt}에 올라온 글입니다</p>
       </Contents>
       <Sides>
         <div className="profile">
-          <img src="https://s3.ap-northeast-2.amazonaws.com/st.dangidata/hobby_conects/data/adm/lecture_manage/curriculum/c38a83a05370cc5f142d2d0f0ae84059.png" />
-          <p>'{writer}'님</p>
+          <img src={imageName} />
+          <p className="writer">'{writer}'님</p>
           <p>{StarCounter(2.5)}</p>
-          <div className="gotoProfile">프로필 보기</div>
+          <div className="gotoProfile" onClick={gotoProfile}>
+            프로필 보기
+          </div>
         </div>
-        {true ? (
-          <>
+        {isMyPost ? (
+          <div onClick={e => setPostId(postId)}>
             <Button
               color="#a48fe0"
               isMypost={true}
-              onClick={e => setEditVisible(true)}
+              onClick={e => {
+                setEditVisible(true);
+              }}
             >
               수정하기
             </Button>
-            <Button color="#DB1313" isMypost={true}>
+            <Button color="#DB1313" isMypost={true} onClick={deletePost}>
               삭제하기
             </Button>
-          </>
+          </div>
         ) : (
-          <Button color="#a48fe0">참여신청</Button>
+          <div onClick={e => setPostId(postId)}>
+            <Button color="#a48fe0" onClick={applicationSubmit}>
+              참여신청
+            </Button>
+          </div>
         )}
       </Sides>
     </Container>

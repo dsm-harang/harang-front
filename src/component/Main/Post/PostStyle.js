@@ -19,15 +19,28 @@ export const Contents = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   font-family: 'S-CoreDream-3Light';
   color: #566270;
   .title {
     font-size: 1.5rem;
     margin-top: 1rem;
     font-family: 'S-CoreDream-6Bold';
+    width: 250px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
   }
   .content {
+    width: 250px;
+    text-align: center;
     margin: 0.5rem 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
   }
   .info {
     width: 15rem;
@@ -46,13 +59,16 @@ export const Contents = styled.div`
   .tags {
     font-size: 0.8rem;
     display: flex;
-    position: relative;
     margin-right: 8rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
   }
   .date {
     width: 200px;
-    margin-top: 5px;
-    margin-right: 25rem;
+    position: absolute;
+    bottom: -1rem;
+    left: -10rem;
     font-size: 0.5rem;
   }
 `;
@@ -60,6 +76,9 @@ export const Sides = styled.div`
   width: 6.5rem;
   height: 15rem;
   margin-left: 0.5rem;
+  .writer {
+    width: 60px;
+  }
   .profile {
     background-color: #566270;
     width: 6.5rem;
@@ -76,6 +95,11 @@ export const Sides = styled.div`
       object-fit: cover;
     }
     p {
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-wrap: normal;
+      overflow: hidden;
       font-size: 0.8rem;
       font-family: 'S-CoreDream-3Light';
       margin: 0.1rem;
@@ -106,4 +130,14 @@ export const Button = styled.button`
 export const HashTag = styled.div`
   margin-right: 0.5rem;
   margin-top: 2.5rem;
+`;
+
+export const ReportButton = styled.button`
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: 5rem;
+  height: 1rem;
+  background-color: white;
+  color: red;
 `;

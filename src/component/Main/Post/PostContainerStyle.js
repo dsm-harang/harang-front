@@ -40,4 +40,6 @@ export const WriteButton = styled.button`
   font-family: 'S-CoreDream-3Light';
   font-size: 1.3rem;
   color: #fffff3;
+
+  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.4);
 `;

@@ -1,3 +1,5 @@
+import { getRequest } from '../../../../lib/api/api';
+
 import React, { useState } from 'react';
 import {
   Overlay,
@@ -23,6 +25,8 @@ const WriteModal = ({ setWritingVisible }) => {
   const [address, setAddress] = useState();
   const [tagItems, setTagItems] = useState([]);
   const [tagInput, setTagInput] = useState();
+  const [personnel, setPersonnel] = useState();
+  const [ageLimit, setAgeLimit] = useState();
 
   const InputHashTags = e => {
     if (e.keyCode !== 32) return;
@@ -32,14 +36,12 @@ const WriteModal = ({ setWritingVisible }) => {
     }
     const items = tagInput.split(' ');
     setTagItems(tagItems.concat('#' + items[items.length - 1]));
-    console.log(tagItems);
     setTagInput('');
   };
   const removeTags = e => {
     const index = e.target.id;
     setTagItems(
       tagItems.filter((e, i) => {
-        console.log(index + ',' + i);
         if (i != index) return e;
       }),
     );
@@ -56,7 +58,24 @@ const WriteModal = ({ setWritingVisible }) => {
       setSumnail(e.target.result);
     };
   };
-  const submitPost = () => {};
+  const submitPost = e => {
+    e.preventdefault();
+
+    const postData = new FormData();
+    postData.append('title', title);
+    postData.append('tag', tagItems);
+    postData.append('meetTime', date);
+    postData.append('createAt', Date.now());
+    postData.append('ageLimit', ageLimit);
+    postData.append('address', address);
+    postData.append('personnel', personnel);
+    postData.append('image', sumnailFile);
+
+    getRequest
+      .post('/post', postData)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  };
   return (
     <div>
       <Global />
@@ -99,7 +118,20 @@ const WriteModal = ({ setWritingVisible }) => {
           value={date}
           onChange={dateLimit}
         />
-        <InputLabel className="Personnel" placeholder="인원" type="number" />
+        <InputLabel
+          className="personnel"
+          placeholder="인원"
+          type="number"
+          value={personnel}
+          onChange={e => setPersonnel(e.target.value)}
+        />
+        <InputLabel
+          className="personnel"
+          placeholder="나이제한 ex)20->20세 이상"
+          type="number"
+          value={ageLimit}
+          onChange={e => setAgeLimit(e.target.value)}
+        />
         <TagContainer className="tag">
           {tagItems.map((e, i) => (
             <TagItem key={i} id={i} onClick={removeTags}>
@@ -120,7 +152,7 @@ const WriteModal = ({ setWritingVisible }) => {
           value={address}
           onChange={e => setAddress(e.target.value)}
         />
-        <PostButton className="button" type="submit">
+        <PostButton className="button" type="submit" onClick={submitPost}>
           게시하기
         </PostButton>
       </WriteModalContainer>

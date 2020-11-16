@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   cursor: pointer;
 
-  font-family: "S-CoreDream-3Light";
+  font-family: 'S-CoreDream-3Light';
   margin-top: 5rem;
   display: flex;
   justify-content: center;
@@ -42,7 +42,8 @@ export const ProfileImg = styled.img`
 export const MyProfile = styled.div`
   display: flex;
   align-items: center;
-  p {
+  .mypage {
+    text-decoration: none;
     margin-bottom: 0.2rem;
     margin-top: 0;
   }

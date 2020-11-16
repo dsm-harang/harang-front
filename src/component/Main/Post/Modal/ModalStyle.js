@@ -2,20 +2,6 @@ import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 export const Global = createGlobalStyle`
 body{
-  @font-face {
-    font-family: "S-CoreDream-3Light";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: "S-CoreDream-6Bold";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-  }
   height:100%; min-height:100%; overflow:hidden !important; touch-action:none;
 }`;
 export const Overlay = styled.div`
@@ -29,6 +15,13 @@ export const Overlay = styled.div`
 `;
 
 export const PostModalContainer = styled.div`
+  cursor: default;
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -45,10 +38,18 @@ export const PostModalContainer = styled.div`
 export const PostInfo = styled.div`
   width: 100%;
   display: flex;
+  font-size: 1rem;
   .title {
     font-family: 'S-CoreDream-6Bold';
     font-size: 3rem;
     margin: 0;
+  }
+  i {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+  }
+  div {
+    margin: 1rem 0;
   }
 `;
 export const Contents = styled.div`
@@ -61,6 +62,7 @@ export const WriteModalContainer = styled.form`
   position: fixed;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 2fr 2fr 1fr 1fr 1fr 1fr;
   align-items: center;
   top: 5rem;
   right: 20rem;
@@ -109,13 +111,19 @@ export const WriteModalContainer = styled.form`
 
   .map,
   .time,
-  .Personnel,
   .tag,
   button {
     grid-column: span 2;
     padding: 0 3px;
     width: 430px;
-    height: 60%;
+    height: 90%;
+  }
+  .personnel {
+    grid-column: span 1;
+    grid-row: span 1;
+    padding: 0 3px;
+    width: 95%;
+    height: 90%;
   }
   .map,
   button {
@@ -164,16 +172,62 @@ export const TagContainer = styled.ul`
   }
 `;
 export const TagItem = styled.div`
-  max-width: 70px;
+  max-width: 100px;
+  min-width: 50px;
   height: 15px;
   font-size: 15px;
   margin-right: 10px;
-  padding: 1px 2px;
+  padding: 2px 2px;
 
   color: #fffff3;
   background-color: #a48fe0;
 
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+
   display: flex;
-  justify-content: center;
   align-items: center;
+
+  border-radius: 10px;
+  padding: 3px 3px;
+  padding-left: 3px;
+
+  cursor: default;
+`;
+
+export const ReportContainer = styled.form`
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 10em;
+  right: 30rem;
+  left: 30rem;
+  bottom: 20rem;
+  background-color: white;
+  z-index: 999;
+  padding: 2rem 2rem;
+`;
+
+export const ReportInputLabel = styled.textarea`
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  height: 80%;
+  padding: 1rem;
+  resize: none;
+  font-family: 'S-CoreDream-3Light';
+`;
+export const ReportButton = styled.button`
+  outline: none;
+  border: none;
+  font-family: 'S-CoreDream-6Bold';
+  background-color: #a48fe0;
+  color: #fffff3;
+  width: 95%;
+  padding: 0.5rem 0rem;
+  margin-top: 0.5rem;
 `;
