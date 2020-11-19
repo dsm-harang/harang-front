@@ -5,3 +5,4 @@ export const NOTIFY_URL = '/mypage/notify';
 export const RECODE_URL = '/mypage/post';
 export const CHATTING_URL = '/chat';
 export const ROOM_URL = '/rooms';
+export const USER_URL = '/user';
