@@ -22,29 +22,18 @@ const DEFAULT_USER_IMG =
 const Mypage = () => {
   const location = useLocation();
   const [id, idChange] = useState(location.pathname.split('/')[2]);
-  const [isMine, isMineChange] = useState(false);
-  const [noticeArray, noticeArrayChange] = useState([
-    { text: '리뷰를 작성해 주세요.', id: 1, type: MODAL_TYPE_REVIEW },
-  ]);
-  const [storageArray, storageArrayChange] = useState([
-    { text: '무슨무슨무슨무슨무슨무슨무슨무슨무슨무슨 체험 참여.', id: 1 },
-  ]);
+  const [isMine, isMineChange] = useState();
+  const [noticeArray, noticeArrayChange] = useState([]);
+  const [storageArray, storageArrayChange] = useState([]);
   const [img, imgChange] = useState(DEFAULT_USER_IMG);
-  const [requestDataArray, requestDataArrayChange] = useState([
-    { name: '오준상', src: DEFAULT_USER_IMG, star: 4, isChecked: false, id: 1 },
-  ]);
-  const [userName, userNameChange] = useState('누군가');
-  const [description, descriptionChange] = useState(
-    '제 이름은 누군가입니다. 누굴까요 ㅋㅋㄹㅃㅃ',
-  );
-  const [comments, commentsChange] = useState([
-    { text: '댓그으을', userName: '오준상', star: 5 },
-  ]);
-  const [reviewDataArray, reviewDataArrayChange] = useState([
-    { name: '오준상', src: DEFAULT_USER_IMG, star: 0, id: 1, review: '' },
-  ]);
+  const [requestDataArray, requestDataArrayChange] = useState([]);
+  const [userName, userNameChange] = useState('');
+  const [description, descriptionChange] = useState();
+  const [comments, commentsChange] = useState([]);
+  const [reviewDataArray, reviewDataArrayChange] = useState([]);
   const [modalId, modalIdChange] = useState(-1);
   const [modalType, modalTypeChange] = useState('');
+  const [star, starChange] = useState(0);
   const modalDelete = id => {
     modalTypeChange('');
     if (typeof id === 'number') {
@@ -82,6 +71,7 @@ const Mypage = () => {
       imgChange(data.imagepath);
       userNameChange(data.name);
       idChange(data.user_id);
+      starChange(data.score);
     } catch (error) {
       console.log(error);
     }
@@ -94,7 +84,7 @@ const Mypage = () => {
   }, []);
   const getRecodeAndSetState = useCallback(async () => {
     try {
-      const { data } = await getRecode(id);
+      const { data } = await getRecode();
       const newState = recodeResponseToState(data);
       storageArrayChange(newState);
     } catch (error) {
@@ -118,19 +108,21 @@ const Mypage = () => {
   const alarmResponseToState = useCallback((response, index) => {
     return response.map(alarm => ({
       text: alarm.content,
-      id: index,
+      id: alarm.id,
       type: alarm.type,
+      userId: alarm.userId,
+      postId: alarm.postId,
     }));
   }, []);
   const getAlarmAndSetState = useCallback(async () => {
     try {
-      const { data } = await getAlarm(id);
+      const { data } = await getAlarm();
       const newState = alarmResponseToState(data);
       noticeArrayChange(newState);
     } catch (error) {
       console.log(error);
     }
-  }, [id]);
+  }, []);
   const renderNoticeComponent = useCallback(
     isMine => {
       if (isMine) {
@@ -157,18 +149,17 @@ const Mypage = () => {
     [comments],
   );
   useEffect(() => {
-    getUserInfoAndSetState();
-  }, []);
-  useEffect(() => {
-    if (id) {
+    if (location.pathname.split('/')[2]) {
       isMineChange(false);
-      getAlarmAndSetState();
-      getCommentAndSetState();
-      getRecodeAndSetState();
+      getUserInfoAndSetState(id);
     } else {
       isMineChange(true);
+      getUserInfoAndSetState();
+      getAlarmAndSetState();
     }
-  }, [id]);
+    getCommentAndSetState();
+    getRecodeAndSetState();
+  }, []);
   return (
     <>
       <Modal
@@ -178,6 +169,7 @@ const Mypage = () => {
         dataChange={setModalDataChangeFunction()}
         modalId={modalId}
         modalIdChange={modalIdChange}
+        star={star}
       />
       <S.MypageDiv>
         <div>
@@ -191,6 +183,7 @@ const Mypage = () => {
               isMine={isMine}
               modalOn={setModalReportModal}
               modalDelete={modalDelete}
+              star={star}
             />
             <Storage storageContentArray={storageArray} />
           </div>

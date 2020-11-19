@@ -23,10 +23,10 @@ const Notice = ({
   const buttonClickHandler = useCallback(
     (id, type, requestModalOn, reviewModalOn) => {
       type === 'review' ? reviewModalOn() : requestModalOn();
-      if (type === 'review') {
+      if (type === 'Score') {
         modalIdChange(id);
         reviewModalOn();
-      } else if (type === 'request') {
+      } else if (type === 'Chat') {
         modalIdChange(id);
         requestModalOn();
       } else {
@@ -36,7 +36,9 @@ const Notice = ({
   );
   return (
     <S.MypageNoticeWrapper>
-      <S.Notice>{createNoticeContentArray(noticeContentArray)}</S.Notice>
+      <S.Notice>
+        <div>{createNoticeContentArray(noticeContentArray)}</div>
+      </S.Notice>
       <S.CalenderButton>
         <S.CalenderIconImg />
         <p>내 일정 확인하기</p>

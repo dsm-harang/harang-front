@@ -1,6 +1,14 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Mypage, Chatting, ErrorPage } from '../';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import {
+  Mypage,
+  Chatting,
+  ErrorPage,
+  MainPage,
+  SearchPage,
+  SignIn,
+  SignUp,
+} from '../';
 
 const MainRouter = () => {
   return (
@@ -8,6 +16,10 @@ const MainRouter = () => {
       <Switch>
         <Route path="/mypage" component={Mypage} />
         <Route path="/chatting" component={Chatting} />
+        <Route path="/main" component={MainPage} />
+        <Route path="/signup" component={SignUp} />
+        <Route exact path="/search" component={SearchPage} />
+        <Route exact path="/login" component={SignIn} />
         <Route path="*" component={ErrorPage} />
       </Switch>
     </BrowserRouter>

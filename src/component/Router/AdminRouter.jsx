@@ -27,7 +27,6 @@ const AdminRouter = () => {
             selectedContentIdChange={selectedContentIdChange}
           />
         </Switch>
-        <Route path="*" component={ErrorPage} />
       </BrowserRouter>
     </>
   );

@@ -13,7 +13,10 @@ const ProfileUserImg = ({ img, imgChange, isMine }) => {
   }, []);
   return (
     <S.MypageUserImg>
-      <S.MypageImg src={img} alt="유저 프로필 사진" />
+      <S.MypageImg
+        src={`http://3.138.108.163:8000/${img}`}
+        alt="유저 프로필 사진"
+      />
       {isMine ? (
         <label>
           <ImgAdd />
