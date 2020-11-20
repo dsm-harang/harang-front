@@ -56,7 +56,7 @@ const PostModal = ({ setPostVisible, postId }) => {
             </div>
             <div className="Personnel">
               <i className="fas fa-user-friends"></i>
-              {postData.personnel}
+              {postData.personnel}명 까지
             </div>
           </div>
         </PostInfo>

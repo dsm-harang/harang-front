@@ -25,8 +25,11 @@ const WriteModal = ({ setWritingVisible }) => {
   const [address, setAddress] = useState();
   const [tagItems, setTagItems] = useState([]);
   const [tagInput, setTagInput] = useState();
+  const [tagOutput, setTagOutput] = useState();
   const [personnel, setPersonnel] = useState();
   const [ageLimit, setAgeLimit] = useState();
+
+  console.log(Date.now());
 
   const InputHashTags = e => {
     if (e.keyCode !== 32) return;
@@ -35,6 +38,7 @@ const WriteModal = ({ setWritingVisible }) => {
       return;
     }
     const items = tagInput.split(' ');
+    setTagOutput(items);
     setTagItems(tagItems.concat('#' + items[items.length - 1]));
     setTagInput('');
   };
@@ -47,34 +51,31 @@ const WriteModal = ({ setWritingVisible }) => {
     );
   };
   const dateLimit = e => {
-    const today = new Date();
-    console.log(today);
-    console.log(e.target.value);
     SetDate(e.target.value);
   };
   const readImg = e => {
     reader.readAsDataURL(e.target.files[0]);
+
     reader.onload = function (e) {
       setSumnail(e.target.result);
     };
   };
   const submitPost = e => {
-    e.preventdefault();
+    e.preventDefault();
 
     const postData = new FormData();
     postData.append('title', title);
-    postData.append('tag', tagItems);
+    postData.append('tag', tagOutput);
     postData.append('meetTime', date);
+    postData.append('content', content);
     postData.append('createAt', Date.now());
     postData.append('ageLimit', ageLimit);
     postData.append('address', address);
     postData.append('personnel', personnel);
     postData.append('image', sumnailFile);
 
-    getRequest
-      .post('/post', postData)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    getRequest().post('/post', postData).then(console.log).catch(alert);
+    setWritingVisible(false);
   };
   return (
     <div>

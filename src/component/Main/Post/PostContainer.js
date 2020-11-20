@@ -6,38 +6,13 @@ import { getRequest } from '../../../lib/api/api';
 import EditModal from './Modal/EditModal';
 import WriteModal from './Modal/WriteModal';
 import ReportModal from './Modal/ReportModal';
-const PostContainer = ({ myData }) => {
+const PostContainer = () => {
   const [postVisible, setPostVisible] = useState(false);
   const [writingVisible, setWritingVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [reportVisible, setReportVisible] = useState(false);
-  const [postList, setPostList] = useState();
+  const [postList, setPostList] = useState([]);
   const [postId, setPostId] = useState();
-  console.log(postId);
-  const dummy = [
-    {
-      post_id: 1,
-      title: '볼링11111111111111111111111111111',
-      content: '볼링칠사람11111111111111111111111111111111111111',
-      writer: '홍길동111111111111111111111',
-      meetTime: '111111111111111111111111111111111',
-      address: '볼링장111111111111111111111111111',
-      ageLimit: 2011111111111111111111111111111111,
-      createdAt: '2020 - 10 - 20',
-      isMyPost: true,
-    },
-    {
-      post_id: 2,
-      title: '볼링',
-      content: '볼링칠사람',
-      writer: '홍길동',
-      meetTime: '',
-      address: '볼링장',
-      ageLimit: 20,
-      createdAt: '2020 - 10 - 20',
-      isMyPost: false,
-    },
-  ];
 
   useEffect(() => {
     getRequest()
@@ -65,25 +40,27 @@ const PostContainer = ({ myData }) => {
       )}
       <div className="header">최근 모집하는 모임</div>
       <Posts>
-        {Array.prototype.map.call(dummy, (e, i) => {
+        {Array.prototype.map.call(postList, (e, i) => {
           return (
             <Post
               setPostVisible={setPostVisible}
               setEditVisible={setEditVisible}
               setReportVisible={setReportVisible}
-              postId={e.post_id}
+              setPostId={setPostId}
               key={i}
+              postId={e.post_id}
+              writerId={e.userId}
+              writerScore={e.score}
               title={e.title}
               content={e.content}
+              writer={e.writer}
               meetTime={e.meetTime}
               address={e.address}
-              ageLimit={e.ageLimit}
-              writer={e.writer}
               createdAt={e.createdAt}
               personnel={e.personnel}
-              imageName={e.imageName}
-              setPostId={setPostId}
-              isMyPost={e.isMyPost}
+              profile={e.profileImage}
+              sumnail={e.postImage}
+              isMyPost={e.isMine}
             />
           );
         })}

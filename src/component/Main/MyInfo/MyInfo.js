@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   MyProfile,
@@ -11,26 +11,32 @@ import {
 import { Cookies } from 'react-cookie';
 import StarCounter from '../StarCounter';
 import { useHistory, Link } from 'react-router-dom';
-
-const MyInfo = ({ myData }) => {
+import { getRequest } from '../../../lib/api/api';
+const MyInfo = () => {
   const history = useHistory();
   const score = 2.5;
   const stars = StarCounter(score);
+
   const createTag = () => {
     const tags = new Cookies().get('search').split(',');
     tags.pop();
     return tags;
   };
-  /*  const [userData, setUserData] = useState();
-  const score = 2.5;
-  const stars = StarCounter(score);
+  const [myData, setUserData] = useState({
+    user_id: '1',
+    name: '오준상',
+    intro: '나는 오준상이다.',
+    imagepath: 'https://image.jpg',
+  });
 
   useEffect(() => {
     getRequest()
       .get('/myPage')
-      .then(res => setUserData(res.data.mypage));
-  }, []);*/
-
+      .then(res => {
+        console.log(res);
+        setUserData(res.data.mypage);
+      });
+  }, []);
   const tags = new Cookies().get('search') && createTag();
 
   return (
@@ -51,7 +57,6 @@ const MyInfo = ({ myData }) => {
               return e;
             })}
           </Stars>
-          <p className="alarm">알림 0</p>
         </div>
         <CurrentTags>
           <p className="tagTitle">최근 검색어</p>
@@ -61,7 +66,7 @@ const MyInfo = ({ myData }) => {
                 return (
                   <Tag
                     value={e}
-                    onClick={event =>
+                    onClick={() =>
                       history.push({
                         pathname: '/search',
                         state: { search: e },

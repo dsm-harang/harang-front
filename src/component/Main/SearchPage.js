@@ -36,10 +36,8 @@ const SearchPage = props => {
         <PostModal setPostVisible={setPostVisible} postId={postId} />
       )}
       <Mainheader />
-      <Header>{tag}의 검색 결과</Header>
-      <Posts>
-        <Post />
-      </Posts>
+      <Header>'{tag}' 의 검색 결과</Header>
+      <Posts></Posts>
     </>
   );
 };

@@ -10,6 +10,7 @@ import {
 } from './PostStyle';
 import StarCounter from '../StarCounter';
 import { getRequest } from '../../../lib/api/api';
+import { useHistory } from 'react-router';
 
 const Post = ({
   setPostVisible,
@@ -17,16 +18,20 @@ const Post = ({
   setReportVisible,
   setPostId,
   postId,
+  writerId,
+  writerScore,
   title,
   content,
+  writer,
   meetTime,
   address,
-  writer,
   createdAt,
   personnel,
-  imageName,
+  profile,
+  sumnail,
   isMyPost,
 }) => {
+  const history = useHistory();
   const applicationSubmit = () => {
     getRequest().post(`post/${postId}`);
   };
@@ -34,12 +39,12 @@ const Post = ({
     getRequest().delete(`/post/${postId}`);
   };
   const gotoProfile = () => {
-    getRequest().delete(`/mypage/`);
+    history.push({ pathname: `/mypage/${writerId}` });
   };
 
   return (
     <Container>
-      <Sumnail src={imageName} />
+      <Sumnail src={sumnail} />
       <Contents>
         <div
           className="title"
@@ -86,7 +91,7 @@ const Post = ({
       </Contents>
       <Sides>
         <div className="profile">
-          <img src={imageName} />
+          <img src={profile} />
           <p className="writer">'{writer}'님</p>
           <p>{StarCounter(2.5)}</p>
           <div className="gotoProfile" onClick={gotoProfile}>

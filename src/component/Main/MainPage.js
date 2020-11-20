@@ -10,8 +10,8 @@ const MainPage = () => {
     <>
       <Mainheader />
       <Slide />
-      <MyInfo myData={myData} />
-      <PostContainer myData={myData} />
+      <MyInfo />
+      <PostContainer />
     </>
   );
 };
