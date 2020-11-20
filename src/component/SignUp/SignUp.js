@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import {
   Container,
   SignUpBox,
@@ -132,7 +132,6 @@ const SignUp = () => {
             value={phoneNum}
             onChange={setPhoneNum}
           />
-
           <span onClick={e => setAgree(!agree)} style={{ cursor: 'pointer' }}>
             개인정보 수집 및 이용에 동의합니다
             <input
@@ -150,6 +149,7 @@ const SignUp = () => {
           >
             SIGN UP
           </Button>
+          <Link to="/login">로그인 하기</Link>
         </SignUpBox>
       </Container>
     </form>

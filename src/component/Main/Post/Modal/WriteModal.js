@@ -12,6 +12,7 @@ import {
   TagItem,
 } from './ModalStyle';
 import Map from '../../../Map/Map';
+import { configs } from 'eslint-plugin-prettier';
 
 const WriteModal = ({ setWritingVisible }) => {
   const reader = new FileReader();
@@ -21,15 +22,13 @@ const WriteModal = ({ setWritingVisible }) => {
   const [sumnail, setSumnail] = useState();
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
-  const [date, SetDate] = useState();
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
   const [address, setAddress] = useState();
   const [tagItems, setTagItems] = useState([]);
   const [tagInput, setTagInput] = useState();
-  const [tagOutput, setTagOutput] = useState();
   const [personnel, setPersonnel] = useState();
   const [ageLimit, setAgeLimit] = useState();
-
-  console.log(Date.now());
 
   const InputHashTags = e => {
     if (e.keyCode !== 32) return;
@@ -38,10 +37,11 @@ const WriteModal = ({ setWritingVisible }) => {
       return;
     }
     const items = tagInput.split(' ');
-    setTagOutput(items);
     setTagItems(tagItems.concat('#' + items[items.length - 1]));
+
     setTagInput('');
   };
+
   const removeTags = e => {
     const index = e.target.id;
     setTagItems(
@@ -50,9 +50,7 @@ const WriteModal = ({ setWritingVisible }) => {
       }),
     );
   };
-  const dateLimit = e => {
-    SetDate(e.target.value);
-  };
+
   const readImg = e => {
     reader.readAsDataURL(e.target.files[0]);
 
@@ -62,13 +60,11 @@ const WriteModal = ({ setWritingVisible }) => {
   };
   const submitPost = e => {
     e.preventDefault();
-
     const postData = new FormData();
     postData.append('title', title);
-    postData.append('tag', tagOutput);
-    postData.append('meetTime', date);
+    postData.append('tag', tagItems.toString().replace(/,/gi, ''));
+    postData.append('meetTime', date + ' ' + time + ':' + '00');
     postData.append('content', content);
-    postData.append('createAt', Date.now());
     postData.append('ageLimit', ageLimit);
     postData.append('address', address);
     postData.append('personnel', personnel);
@@ -113,11 +109,18 @@ const WriteModal = ({ setWritingVisible }) => {
         <Map searchText={address} clickCallback={e => setAddress(e)} />
 
         <InputLabel
-          className="time"
+          className="date"
           type="date"
-          placeholder="시간"
           value={date}
-          onChange={dateLimit}
+          onChange={e => setDate(e.target.value)}
+        />
+        <InputLabel
+          className="date"
+          type="time"
+          value={time}
+          onChange={e => {
+            setTime(e.target.value);
+          }}
         />
         <InputLabel
           className="personnel"

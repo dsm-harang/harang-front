@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Sumnail,
@@ -11,9 +11,8 @@ import {
 import StarCounter from '../StarCounter';
 import { getRequest } from '../../../lib/api/api';
 import { useHistory } from 'react-router';
-
+import PostModal from './Modal/PostModal';
 const Post = ({
-  setPostVisible,
   setEditVisible,
   setReportVisible,
   setPostId,
@@ -31,7 +30,9 @@ const Post = ({
   sumnail,
   isMyPost,
 }) => {
+  const [postVisible, setPostVisible] = useState(false);
   const history = useHistory();
+
   const applicationSubmit = () => {
     getRequest().post(`post/${postId}`);
   };
@@ -41,9 +42,12 @@ const Post = ({
   const gotoProfile = () => {
     history.push({ pathname: `/mypage/${writerId}` });
   };
-
+  console.log('postId : ' + postId);
   return (
     <Container>
+      {postVisible && (
+        <PostModal setPostVisible={setPostVisible} postId={postId} />
+      )}
       <Sumnail src={sumnail} />
       <Contents>
         <div

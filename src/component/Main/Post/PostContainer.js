@@ -7,7 +7,6 @@ import EditModal from './Modal/EditModal';
 import WriteModal from './Modal/WriteModal';
 import ReportModal from './Modal/ReportModal';
 const PostContainer = () => {
-  const [postVisible, setPostVisible] = useState(false);
   const [writingVisible, setWritingVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [reportVisible, setReportVisible] = useState(false);
@@ -35,20 +34,17 @@ const PostContainer = () => {
       {editVisible && (
         <EditModal setEditVisible={setEditVisible} postId={postId} />
       )}
-      {postVisible && (
-        <PostModal setPostVisible={setPostVisible} postId={postId} />
-      )}
+
       <div className="header">최근 모집하는 모임</div>
       <Posts>
         {Array.prototype.map.call(postList, (e, i) => {
           return (
             <Post
-              setPostVisible={setPostVisible}
               setEditVisible={setEditVisible}
               setReportVisible={setReportVisible}
               setPostId={setPostId}
               key={i}
-              postId={e.post_id}
+              postId={e.postId}
               writerId={e.userId}
               writerScore={e.score}
               title={e.title}

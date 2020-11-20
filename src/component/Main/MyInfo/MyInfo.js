@@ -24,8 +24,8 @@ const MyInfo = () => {
   };
   const [myData, setUserData] = useState({
     user_id: '1',
-    name: '오준상',
-    intro: '나는 오준상이다.',
+    name: '이지윤',
+    intro: '나는 .',
     imagepath: 'https://image.jpg',
   });
 

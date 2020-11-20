@@ -88,11 +88,12 @@ const EditeModal = ({ setEditVisible, postId }) => {
     const postData = {
       title: title,
       content: content,
-      tag: tagItems.toString(),
+      tag: tagItems.toString().replace(/#/gi, ''),
       meetTime: date,
       address: address,
-      age_limit: ageLimit,
+      ageLimit: ageLimit,
       personnel: personnel,
+      image: sumnailFile,
     };
 
     getRequest.post(`/post/${postId}` / postData);

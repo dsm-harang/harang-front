@@ -14,9 +14,14 @@ export const SigninContainer = styled.form`
   .SignIn {
     margin-top: 10rem;
     margin-bottom: 5rem;
-    font-family: 'S-CoreDream-3Light';
+    font-family: 'S-CoreDream-6Bold';
     font-size: 45px;
     color: #566270;
+  }
+  .signup {
+    cursor: pointer;
+    width: 320px;
+    text-align: left;
   }
 `;
 
