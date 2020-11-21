@@ -7,7 +7,7 @@ export const getRequest = () =>
     baseURL: SERVER_URL,
     headers: {
       'Content-Type': 'application/json',
-      'X-Access-Token': localStorage.getItem('accessToken'),
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
     },
   });
 

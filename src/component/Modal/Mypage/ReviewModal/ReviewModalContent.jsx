@@ -7,12 +7,15 @@ import ReviewModalReviewContent from './ReviewModalReviewContent';
 const RequestApproveModalContent = ({
   name,
   id,
+  userId,
+  postId,
   star,
   src,
   starChange,
   deleteData,
   review,
   reviewChange,
+  requestFunction,
 }) => {
   const [isReviewModalOn, modalOnChange] = useState(false);
   const clickStarWithId = useCallback(
@@ -55,9 +58,17 @@ const RequestApproveModalContent = ({
     [id],
   );
   const submitReview = useCallback(() => {
-    deleteData(id);
-    deleteModal();
-    setCommentAndGetStatus(id, review, star);
+    const body = {
+      scoreTargetId: userId,
+      score: star,
+      scoreContent: review,
+      postId: postId,
+    };
+    requestFunction(userId, body).then(() => {
+      deleteData(id);
+      deleteModal();
+      setCommentAndGetStatus(id, review, star);
+    });
   }, []);
   return (
     <>
@@ -71,6 +82,8 @@ const RequestApproveModalContent = ({
         reviewChange={reviewChangeWithId}
         isAble={isReviewModalOn}
         submitReview={submitReview}
+        userId={userId}
+        key={`reviewModal${id}`}
       />
 
       <S.BoardContent>
