@@ -1,35 +1,33 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import AdminNavigation from '../Default/AdminNavigation';
-import { AdminPost, AdminUserSearch, AdminUserDetail, ErrorPage } from '../';
+import { AdminPost, AdminUserDetail } from '../';
+import { WithCheckAdmin } from '../HOC';
 
 const AdminRouter = () => {
   const [selectedContentId, selectedContentIdChange] = useState('user');
   return (
     <>
-      <BrowserRouter>
-        <AdminNavigation selectedContentId={selectedContentId} />
-        <Switch>
-          <Route
-            path="/admin/user/:userId"
-            render={() => (
-              <AdminUserDetail
-                selectedContentIdChange={selectedContentIdChange}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/admin"
-            render={() => (
-              <AdminPost selectedContentIdChange={selectedContentIdChange} />
-            )}
-            selectedContentIdChange={selectedContentIdChange}
-          />
-        </Switch>
-      </BrowserRouter>
+      <AdminNavigation selectedContentId={selectedContentId} />
+      <Switch>
+        <Route
+          path="/admin/user/:userId"
+          render={() => (
+            <AdminUserDetail
+              selectedContentIdChange={selectedContentIdChange}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/admin"
+          render={() => (
+            <AdminPost selectedContentIdChange={selectedContentIdChange} />
+          )}
+        />
+      </Switch>
     </>
   );
 };
 
-export default AdminRouter;
+export default WithCheckAdmin()(AdminRouter);

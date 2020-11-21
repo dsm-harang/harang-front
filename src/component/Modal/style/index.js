@@ -33,8 +33,11 @@ export const RequestModal = styled(Modal)`
   height: 700px;
   padding: 40px;
   box-sizing: border-box;
+  animation-direction: normal;
+  animation-duration: 0.3s;
+  animation-name: ${modalFade};
+  animation-fill-mode: forwards;
   & > div {
-    border: 1px solid black;
     padding: 10px;
     box-sizing: border-box;
     height: 500px;

@@ -7,6 +7,7 @@ import ErrorPage from './Error';
 import { MainPage, SearchPage } from './Main';
 import SignIn from './Signin';
 import SignUp from './SignUp';
+import AdminLogin from './AdminLogin';
 
 export {
   Mypage,
@@ -19,4 +20,5 @@ export {
   SearchPage,
   SignIn,
   SignUp,
+  AdminLogin,
 };

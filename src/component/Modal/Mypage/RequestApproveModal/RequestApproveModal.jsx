@@ -8,6 +8,7 @@ const RequestApproveModal = ({
   onDelete,
   modalId,
   modalIdChange,
+  requestFunction,
 }) => {
   const setPersonChecked = useCallback(
     checkedId => {
@@ -29,9 +30,11 @@ const RequestApproveModal = ({
     [requestData],
   );
   const buttonClickHandler = useCallback(() => {
-    onDelete(modalId);
-    modalIdChange(-1);
-  }, []);
+    approveUsers(requestData).then(() => {
+      onDelete(modalId);
+      modalIdChange(-1);
+    });
+  }, [requestData]);
   const setContent = useCallback(() => {
     return requestData.map(data => (
       <RequestApproveModalContent
@@ -40,6 +43,17 @@ const RequestApproveModal = ({
       />
     ));
   }, [requestData]);
+  const approveUsers = members =>
+    new Promise((resolve, reject) => {
+      try {
+        members.map(member => {
+          requestFunction(member.id);
+        });
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   return (
     <S.RequestModal>
       <div>{setContent()}</div>

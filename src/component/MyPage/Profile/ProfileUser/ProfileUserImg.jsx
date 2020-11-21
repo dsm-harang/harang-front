@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import * as S from '../../style';
 import ImgAdd from './ImgAdd';
 
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 const ProfileUserImg = ({ img, imgChange, isMine }) => {
   const inputChangeHandler = event => {
     const file = event.target.files[0];
@@ -13,10 +14,7 @@ const ProfileUserImg = ({ img, imgChange, isMine }) => {
   }, []);
   return (
     <S.MypageUserImg>
-      <S.MypageImg
-        src={`http://3.138.108.163:8000/${img}`}
-        alt="유저 프로필 사진"
-      />
+      <S.MypageImg src={`${SERVER_URL}${img}`} alt="유저 프로필 사진" />
       {isMine ? (
         <label>
           <ImgAdd />

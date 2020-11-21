@@ -8,6 +8,7 @@ const ReviewModal = ({
   onDelete,
   modalId,
   modalIdChange,
+  requestFunction,
 }) => {
   const getStarChangedDataList = useCallback((requestData, id, star) => {
     return requestData.map(data => {
@@ -64,6 +65,7 @@ const ReviewModal = ({
           deleteData={setDeleteDataListToState}
           starChange={setStarChangedDataListToState}
           reviewChange={setReviewChangeDataListToState}
+          requestFunction={requestFunction}
         />
       ));
     },

@@ -21,15 +21,14 @@ const Notice = ({
     ));
   }, []);
   const buttonClickHandler = useCallback(
-    (id, type, requestModalOn, reviewModalOn) => {
+    (id, type, requestModalOn, reviewModalOn, postId) => {
       type === 'review' ? reviewModalOn() : requestModalOn();
       if (type === 'Score') {
         modalIdChange(id);
-        reviewModalOn();
+        reviewModalOn(postId);
       } else if (type === 'Chat') {
         modalIdChange(id);
-        requestModalOn();
-      } else {
+        requestModalOn(postId);
       }
     },
     [],
