@@ -6,6 +6,7 @@ import {
   ADMIN_SCORE_RESET_URL,
   ADMIN_URL,
   ADMIN_USER_URL,
+  ADMIN_LOGIN_URL,
 } from './ServerUrl';
 
 export const getAdminUserInfo = id => {
@@ -38,4 +39,8 @@ export const deleteReportPost = id => {
 
 export const deleteReportUser = id => {
   return getRequest().delete(getUrl(ADMIN_REPORT_USER_URL, id));
+};
+
+export const adminLogin = body => {
+  return getRequest().post(ADMIN_LOGIN_URL, body);
 };
