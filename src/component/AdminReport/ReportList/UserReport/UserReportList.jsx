@@ -27,4 +27,4 @@ const UserReport = React.forwardRef(({ reportList, deleteContent }, ref) => {
   );
 });
 
-export default UserReport;
+export default React.memo(UserReport);
