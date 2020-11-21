@@ -60,6 +60,7 @@ export const Contents = styled.div`
 
 export const WriteModalContainer = styled.form`
   position: fixed;
+  width: 900px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 2fr 2fr 1fr 1fr 1fr 1fr;
@@ -110,7 +111,6 @@ export const WriteModalContainer = styled.form`
   }
 
   .map,
-  .time,
   .tag,
   button {
     grid-column: span 2;
@@ -118,7 +118,8 @@ export const WriteModalContainer = styled.form`
     width: 430px;
     height: 90%;
   }
-  .personnel {
+  .personnel,
+  .date {
     grid-column: span 1;
     grid-row: span 1;
     padding: 0 3px;

@@ -6,14 +6,12 @@ import { getRequest } from '../../../lib/api/api';
 import EditModal from './Modal/EditModal';
 import WriteModal from './Modal/WriteModal';
 import ReportModal from './Modal/ReportModal';
-const PostContainer = ({ myData }) => {
-  const [postVisible, setPostVisible] = useState(false);
+const PostContainer = () => {
   const [writingVisible, setWritingVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [reportVisible, setReportVisible] = useState(false);
-  const [postList, setPostList] = useState();
+  const [postList, setPostList] = useState([]);
   const [postId, setPostId] = useState();
-  const dummy = [];
 
   useEffect(() => {
     getRequest()
@@ -35,30 +33,29 @@ const PostContainer = ({ myData }) => {
       {editVisible && (
         <EditModal setEditVisible={setEditVisible} postId={postId} />
       )}
-      {postVisible && (
-        <PostModal setPostVisible={setPostVisible} postId={postId} />
-      )}
+
       <div className="header">최근 모집하는 모임</div>
       <Posts>
-        {Array.prototype.map.call(dummy, (e, i) => {
+        {Array.prototype.map.call(postList, (e, i) => {
           return (
             <Post
-              setPostVisible={setPostVisible}
               setEditVisible={setEditVisible}
               setReportVisible={setReportVisible}
-              postId={e.post_id}
+              setPostId={setPostId}
               key={i}
+              postId={e.postId}
+              writerId={e.userId}
+              writerScore={e.score}
               title={e.title}
               content={e.content}
+              writer={e.writer}
               meetTime={e.meetTime}
               address={e.address}
-              ageLimit={e.ageLimit}
-              writer={e.writer}
               createdAt={e.createdAt}
               personnel={e.personnel}
-              imageName={e.imageName}
-              setPostId={setPostId}
-              isMyPost={e.isMyPost}
+              profile={e.profileImage}
+              sumnail={e.postImage}
+              isMyPost={e.isMine}
             />
           );
         })}

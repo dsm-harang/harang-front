@@ -9,6 +9,7 @@ import {
 import { createGlobalStyle } from 'styled-components';
 import { getRequest } from '../../lib/api/api';
 import { useHistory } from 'react-router-dom';
+import { Link } from '@material-ui/core';
 const GlobalStyle = createGlobalStyle`
 	body {
 		padding: 0;
@@ -70,6 +71,9 @@ const SignIn = () => {
           <SigninBtn type="submit" onClick={onSignin}>
             로그인
           </SigninBtn>
+          <Link to="/signup" className="signup">
+            회원가입 하기
+          </Link>
         </>
       </SigninContainer>
       <Background></Background>

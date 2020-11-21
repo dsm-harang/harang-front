@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Sumnail,
@@ -10,23 +10,29 @@ import {
 } from './PostStyle';
 import StarCounter from '../StarCounter';
 import { getRequest } from '../../../lib/api/api';
-
+import { useHistory } from 'react-router';
+import PostModal from './Modal/PostModal';
 const Post = ({
-  setPostVisible,
   setEditVisible,
   setReportVisible,
   setPostId,
   postId,
+  writerId,
+  writerScore,
   title,
   content,
+  writer,
   meetTime,
   address,
-  writer,
   createdAt,
   personnel,
-  imageName,
+  profile,
+  sumnail,
   isMyPost,
 }) => {
+  const [postVisible, setPostVisible] = useState(false);
+  const history = useHistory();
+
   const applicationSubmit = () => {
     getRequest().post(`post/${postId}`);
   };
@@ -34,12 +40,15 @@ const Post = ({
     getRequest().delete(`/post/${postId}`);
   };
   const gotoProfile = () => {
-    getRequest().delete(`/mypage/`);
+    history.push({ pathname: `/mypage/${writerId}` });
   };
-
+  console.log('postId : ' + postId);
   return (
     <Container>
-      <Sumnail src={imageName} />
+      {postVisible && (
+        <PostModal setPostVisible={setPostVisible} postId={postId} />
+      )}
+      <Sumnail src={sumnail} />
       <Contents>
         <div
           className="title"
@@ -86,7 +95,7 @@ const Post = ({
       </Contents>
       <Sides>
         <div className="profile">
-          <img src={imageName} />
+          <img src={profile} />
           <p className="writer">'{writer}'님</p>
           <p>{StarCounter(2.5)}</p>
           <div className="gotoProfile" onClick={gotoProfile}>

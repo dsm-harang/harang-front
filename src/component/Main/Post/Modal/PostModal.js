@@ -10,7 +10,6 @@ import {
 } from './ModalStyle';
 
 const PostModal = ({ setPostVisible, postId }) => {
-  const reader = new FileReader();
   const [postData, setPostData] = useState({
     title: 'TITLE',
     content: 'content',
@@ -18,20 +17,13 @@ const PostModal = ({ setPostVisible, postId }) => {
     address: '대덕소프트웨어 마이스터 고등학교',
     personnel: 3,
   });
-  const [sumnail, setSumnail] = useState();
 
   useEffect(() => {
     getRequest()
       .get(`/post/${postId}`)
-      .then(res => setPostData(res.data));
+      .then(res => setPostData(res.data))
+      .catch(alert);
   }, []);
-
-  // const readImg = () => {
-  //   reader.readAsDataURL(postData.image);
-  //   reader.onload = function (e) {
-  //     setSumnail(e.target.result);
-  //   };
-  // };
 
   return (
     <div>
@@ -41,8 +33,7 @@ const PostModal = ({ setPostVisible, postId }) => {
         <PostInfo>
           <Sumnail
             className="sumnail"
-            // files={postData.image}
-            // Sumnail={sumnail}
+            src={`data:image/png;base64,${postData.postImage}`}
           />
           <div className="info">
             <p className="title">{postData.title}</p>
@@ -56,7 +47,7 @@ const PostModal = ({ setPostVisible, postId }) => {
             </div>
             <div className="Personnel">
               <i className="fas fa-user-friends"></i>
-              {postData.personnel}
+              {postData.personnel}명 까지
             </div>
           </div>
         </PostInfo>
