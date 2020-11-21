@@ -9,61 +9,55 @@ import {
   deleteReportUser,
   deletePost,
 } from '../../lib/api/Admin';
+import { useHistory } from 'react-router';
+
+const ADMIN_NOT_FOUND_MESSAGE = 'Admin Not Found';
 
 const AdminReport = ({ selectedContentIdChange }) => {
+  const history = useHistory();
   const firstPage = useRef();
   const secondPage = useRef();
   const [page, pageChange] = useState(1);
-  const [userReportList, userReportListChange] = useState([
-    {
-      id: 1,
-      targetId: 1,
-      name: 'test',
-      targetUserId: 'test',
-      date: '2020-11-11',
-      reason: '존나 나댐',
-    },
-  ]);
-  const [postReportList, postReportListChange] = useState([
-    {
-      id: 1,
-      title: 'test',
-      writer: 'test',
-      date: '2020-11-11',
-    },
-    {
-      id: 2,
-      title: 'test',
-      writer: 'test',
-      date: '2020-11-11',
-    },
-  ]);
+  const [userReportList, userReportListChange] = useState([]);
+  const [postReportList, postReportListChange] = useState([]);
+  const requestErrorHandler = useCallback(error => {
+    const data = error.response.data;
+    if (data.status === 401 && data.message === ADMIN_NOT_FOUND_MESSAGE) {
+      history.push('/login');
+    }
+  });
   const deleteUserReportListChangeWithId = useCallback(
     async id => {
       try {
         await deleteReportUser(id);
         const buffer = filterList(id, userReportList);
         userReportListChange(buffer);
-      } catch (error) {}
+      } catch (error) {
+        requestErrorHandler(error);
+      }
     },
     [userReportListChange, userReportList],
   );
   const deletePostReportListChangeWithId = useCallback(
     async id => {
       try {
-        await deleteReportPost();
+        await deleteReportPost(id);
         const buffer = filterList(id, postReportList);
         postReportListChange(buffer);
-      } catch (error) {}
+      } catch (error) {
+        requestErrorHandler(error);
+      }
     },
     [postReportListChange, postReportList],
   );
-  const deletePostAndSetState = useCallback(async id => {
+  const deletePostAndSetState = useCallback(async (id, postId) => {
     try {
-      await deletePost(id);
+      await deletePost(postId);
       const buffer = filterList(id, postReportList);
       postReportListChange(buffer);
-    } catch (error) {}
+    } catch (error) {
+      requestErrorHandler(error);
+    }
   }, []);
   const filterList = useCallback((id, list) => {
     return list.filter(content => content.id !== id);
@@ -81,31 +75,40 @@ const AdminReport = ({ selectedContentIdChange }) => {
     [firstPage, secondPage],
   );
   const getReportUserListAndSetState = useCallback(async () => {
-    const { data } = await getAdminReportUserList();
-    const newState = reportUserListResponseToState(data);
-    userReportListChange(newState);
+    try {
+      const { data } = await getAdminReportUserList();
+      const newState = reportUserListResponseToState(data);
+      userReportListChange(newState);
+    } catch (error) {
+      requestErrorHandler(error);
+    }
   }, []);
   const reportUserListResponseToState = useCallback(dataList => {
     return dataList.map(
-      ({ id, target_id, target_name, reportTime, target_user_id }) => ({
+      ({ id, targetId, targetName, reportTime, targetUserId }) => ({
         id,
-        name: target_name,
-        targetUserId: target_user_id,
+        name: targetName,
+        targetUserId: targetUserId,
         reportDate: reportTime,
-        targetId: target_id,
+        targetId: targetId,
       }),
     );
   });
   const getReportPostListAndSetState = useCallback(async () => {
-    const { data } = await getAdminReportPostList();
-    const newState = reportPostListResponseToState(data);
-    postReportListChange(newState);
+    try {
+      const { data } = await getAdminReportPostList();
+      const newState = reportPostListResponseToState(data);
+      postReportListChange(newState);
+    } catch (error) {
+      requestErrorHandler(error);
+    }
   }, []);
   const reportPostListResponseToState = useCallback(dataList => {
-    return dataList.map(({ id, title, writer, reportTime }) => ({
+    return dataList.map(({ id, title, writer, reportTime, postId }) => ({
       id,
+      postId,
       title: title,
-      writer: writer,
+      writer,
       reportDate: reportTime,
     }));
   });
