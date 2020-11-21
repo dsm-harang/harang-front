@@ -8,13 +8,17 @@ const PostReportListContent = ({
   date,
   deleteContent,
   deletePostInDatabase,
+  postId,
 }) => {
   const deleteContentButtonClickHandler = useCallback(() => {
     deleteContent(id);
   }, [id, deleteContent]);
   const deletePostInDatabaseButtonClickHandler = useCallback(() => {
-    deletePostInDatabase(id);
-  }, [id, deletePostInDatabase]);
+    const isDeletePost = window.confirm('이 게시글을 삭제하시겠습니까?');
+    if (isDeletePost) {
+      deletePostInDatabase(id, postId);
+    }
+  }, [id, postId, deletePostInDatabase]);
   return (
     <S.AdminPostListContent>
       <div className="id">{id}</div>

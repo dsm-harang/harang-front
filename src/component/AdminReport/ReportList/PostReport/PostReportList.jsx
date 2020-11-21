@@ -7,12 +7,13 @@ const PostReportList = React.forwardRef(
   ({ reportList, deleteContent, deletePostInDatabase }, ref) => {
     const setContent = useCallback(
       reportList => {
-        return reportList.map(({ id, title, writer, date }) => (
+        return reportList.map(({ id, title, writer, reportDate, postId }) => (
           <PostReportListContent
             id={id}
             title={title}
             writer={writer}
-            date={date}
+            date={reportDate}
+            postId={postId}
             deleteContent={deleteContent}
             deletePostInDatabase={deletePostInDatabase}
             key={id + title}
@@ -33,4 +34,4 @@ const PostReportList = React.forwardRef(
   },
 );
 
-export default PostReportList;
+export default React.memo(PostReportList);
