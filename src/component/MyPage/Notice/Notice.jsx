@@ -21,22 +21,23 @@ const Notice = ({
     ));
   }, []);
   const buttonClickHandler = useCallback(
-    (id, type, requestModalOn, reviewModalOn) => {
+    (id, type, requestModalOn, reviewModalOn, postId) => {
       type === 'review' ? reviewModalOn() : requestModalOn();
-      if (type === 'review') {
+      if (type === 'Score') {
         modalIdChange(id);
-        reviewModalOn();
-      } else if (type === 'request') {
+        reviewModalOn(postId);
+      } else if (type === 'Chat') {
         modalIdChange(id);
-        requestModalOn();
-      } else {
+        requestModalOn(postId);
       }
     },
     [],
   );
   return (
     <S.MypageNoticeWrapper>
-      <S.Notice>{createNoticeContentArray(noticeContentArray)}</S.Notice>
+      <S.Notice>
+        <div>{createNoticeContentArray(noticeContentArray)}</div>
+      </S.Notice>
       <S.CalenderButton>
         <S.CalenderIconImg />
         <p>내 일정 확인하기</p>

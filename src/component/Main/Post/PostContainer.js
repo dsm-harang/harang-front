@@ -21,7 +21,6 @@ const PostContainer = () => {
       })
       .catch(alert);
   }, []);
-  const a = () => console.log('a');
   return (
     <Container>
       <WriteButton onClick={e => setWritingVisible(true)}>
