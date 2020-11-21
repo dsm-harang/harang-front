@@ -6,7 +6,7 @@ const UserReportListHeaderContent = () => {
     <S.AdminUserReportListHeaderContent>
       <div className="id">ID</div>
       <div className="name">NAME</div>
-      <div className="targetUserId">WRITER</div>
+      <div className="targetUserId">USER ID</div>
       <div className="date">DATE</div>
       <div className="reason">REASON</div>
     </S.AdminUserReportListHeaderContent>
