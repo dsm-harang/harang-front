@@ -23,21 +23,29 @@ const AdminUserDetail = () => {
   const [userInfo, userInfoChange] = useState(initialUserInfo);
   const getUserInfoAndSetState = useCallback(async () => {
     try {
-      const { data } = await getAdminUserInfo();
+      const { data } = await getAdminUserInfo(userId);
     } catch (error) {}
   }, []);
   const deleteUserAndChangePage = useCallback(async () => {
     try {
-      await deleteUser(userId);
-      history.push('/admin');
+      const isDeleteUser = window.confirm('이 유저를 삭제하겠습니까?');
+      if (isDeleteUser) {
+        await deleteUser(userId);
+        history.push('/admin');
+      }
     } catch (error) {}
   }, [userId]);
   const resetStarAndSetState = useCallback(async () => {
     try {
-      await resetUserStar(userId);
-      const copy = { ...userInfo };
-      copy.star = 0;
-      userInfoChange(copy);
+      const isDeleteScore = window.confirm(
+        '이 유저의 별점을 초기화 하시겠습니까?',
+      );
+      if (isDeleteScore) {
+        await resetUserStar(userId);
+        const copy = { ...userInfo };
+        copy.star = 0;
+        userInfoChange(copy);
+      }
     } catch (error) {}
   }, [userId]);
   useEffect(() => {
