@@ -5,39 +5,48 @@ import { getRequest } from '../../lib/api/api';
 import { Posts } from './Post/PostContainerStyle';
 import Post from './Post/Post';
 
-import PostModal from './Post/Modal/PostModal';
-import EditModal from './Post/Modal/EditModal';
 import WriteModal from './Post/Modal/WriteModal';
 import ReportModal from './Post/Modal/ReportModal';
 
-const SearchPage = props => {
-  const [postList, setPostList] = useState();
-  const [postVisible, setPostVisible] = useState(false);
+const SearchPage = ({ location }) => {
+  const [postList, setPostList] = useState([]);
   const [writingVisible, setWritingVisible] = useState(false);
-  const [editVisible, setEditVisible] = useState(false);
   const [reportVisible, setReportVisible] = useState(false);
   const [postId, setPostId] = useState();
-  const tag = props.location.state.search;
-  // useEffect(() => {
-  //   getRequest()
-  //     .post('/post/tag', tag)
-  //     .then(res => setPostList(res.data));
-  // }, []);
+
+  console.log(location);
+  const tag = location.search.replace('?', '');
+
+  useEffect(() => {
+    getRequest()
+      .get(`/search/tag`)
+      .then(res => setPostList(res.data));
+  }, []);
+
   return (
     <>
       {reportVisible && <ReportModal setReportVisible={setReportVisible} />}
       {writingVisible && (
         <WriteModal setWritingVisible={setWritingVisible} postId={postId} />
       )}
-      {editVisible && (
-        <EditModal setEditVisible={setEditVisible} postId={postId} />
-      )}
-      {postVisible && (
-        <PostModal setPostVisible={setPostVisible} postId={postId} />
-      )}
       <Mainheader />
       <Header>'{tag}' 의 검색 결과</Header>
-      <Posts></Posts>
+      <Posts>
+        {Array.prototype.map.call(postList, (e, i) => {
+          const tags = e.tag.split('#');
+          tags.shift();
+          return (
+            <Post
+              setReportVisible={setReportVisible}
+              setPostId={setPostId}
+              key={i}
+              data={e}
+              isMyPost={e.isMine}
+              tag={tags}
+            />
+          );
+        })}
+      </Posts>
     </>
   );
 };

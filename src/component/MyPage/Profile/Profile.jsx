@@ -2,7 +2,7 @@ import React from 'react';
 import ProfileUser from './ProfileUser';
 import * as S from '../style';
 
-const Profile = ({ img, imgChange, userName, isMine, modalOn, star }) => {
+const Profile = ({ img, imgChange, userName, isMine, modalOn }) => {
   return (
     <div>
       <S.Profile>
@@ -11,7 +11,6 @@ const Profile = ({ img, imgChange, userName, isMine, modalOn, star }) => {
           userName={userName}
           imgChange={imgChange}
           isMine={isMine}
-          star={star}
         />
         {isMine ? (
           ''

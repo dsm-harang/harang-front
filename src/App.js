@@ -1,6 +1,11 @@
 import React from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { Mypage, Chatting } from './component';
+import SignUp from './component/SignUp/SignUp';
+import MainPage from './component/Main/MainPage';
+import SignIn from './component/Signin/Signin';
+import SearchPage from './component/Main/SearchPage';
 import { createGlobalStyle } from 'styled-components';
-import Router from './component/Router';
 
 const FontSetting = createGlobalStyle`
 body{
@@ -21,7 +26,19 @@ body{
 }`;
 
 function App() {
-  return <Router />;
+  return (
+    <BrowserRouter>
+      <FontSetting />
+      <Switch>
+        <Route path="/mypage" component={Mypage} />
+        <Route path="/chatting" component={Chatting} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/main" component={MainPage} />
+        <Route path="/login" component={SignIn} />
+        <Route exact path="/search/:keyword?" component={SearchPage} />
+      </Switch>
+    </BrowserRouter>
+  );
 }
 
 export default App;

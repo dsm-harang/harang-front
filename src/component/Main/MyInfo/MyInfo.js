@@ -11,7 +11,7 @@ import {
 import { Cookies } from 'react-cookie';
 import StarCounter from '../StarCounter';
 import { useHistory, Link } from 'react-router-dom';
-import { getRequest } from '../../../lib/api/api';
+import { getRequest, SERVER_URL } from '../../../lib/api/api';
 const MyInfo = () => {
   const history = useHistory();
   const score = 2.5;
@@ -22,31 +22,34 @@ const MyInfo = () => {
     tags.pop();
     return tags;
   };
-  const [myData, setUserData] = useState({
-    user_id: '1',
-    name: '이지윤',
-    intro: '나는 .',
-    imagepath: 'https://image.jpg',
+
+  const [userData, setUserData] = useState({
+    id: '-1',
+    name: 'undefined',
+    intro: 'undefined',
+    imagName: 'undefined',
   });
 
   useEffect(() => {
     getRequest()
-      .get('/myPage')
+      .get('/mypage')
       .then(res => {
-        console.log(res);
-        setUserData(res.data.mypage);
+        setUserData(res.data);
       });
   }, []);
+
   const tags = new Cookies().get('search') && createTag();
 
   return (
     <Container>
       <section>
-        <ProfileImg src={myData.imagepath}></ProfileImg>
+        <ProfileImg
+          src={`${SERVER_URL}image/${userData.imagName}`}
+        ></ProfileImg>
         <div>
           <div>
             <MyProfile>
-              <UserName>{myData.name}님</UserName>
+              <UserName>{userData.name}님</UserName>
               <Link to="/mypage" className="mypage">
                 마이페이지
               </Link>
@@ -67,10 +70,7 @@ const MyInfo = () => {
                   <Tag
                     value={e}
                     onClick={() =>
-                      history.push({
-                        pathname: '/search',
-                        state: { search: e },
-                      })
+                      history.push({ pathname: `/search`, search: e })
                     }
                   >
                     {e}
