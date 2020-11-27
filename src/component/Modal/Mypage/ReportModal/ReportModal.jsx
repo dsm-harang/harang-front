@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import * as S from '../../style';
 
-const ReportModal = ({ requestFunction, id, onDelete }) => {
+const ReportModal = ({ requestFunction, data, onDelete }) => {
   const [reportText, reportTextChange] = useState('');
   const textAreaChangeHandler = useCallback(e => {
     reportTextChange(e.target.value);
@@ -10,7 +10,7 @@ const ReportModal = ({ requestFunction, id, onDelete }) => {
     try {
       const newFormData = new FormData();
       newFormData.append('content', reportText);
-      await requestFunction(id, newFormData);
+      await requestFunction(data, newFormData);
       onDelete();
       alert('신고 되었습니다.');
     } catch (error) {
@@ -23,7 +23,7 @@ const ReportModal = ({ requestFunction, id, onDelete }) => {
         onDelete();
       }
     }
-  }, [id, reportText]);
+  }, [data, reportText]);
   return (
     <S.ReportModal>
       <S.ReportModalTextArea
