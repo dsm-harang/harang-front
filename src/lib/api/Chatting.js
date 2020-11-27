@@ -1,33 +1,44 @@
-import Stomp from 'stompjs';
-import SockJs from 'sockjs-client';
-import { SERVER_URL, getRequest, getUrl } from './api';
-import { ROOM_URL, ROOMS_URL } from './ServerUrl';
+import io from 'socket.io-client';
+import { getRequest, getUrl } from './api';
+import { ROOM_URL } from './ServerUrl';
 
 class Socket {
-  constructor() {
-    this.isConnected = false;
-    const socket = new SockJs('/chat');
-    this.client = Stomp.over(socket);
+  connect() {
+    this.client = io.connect(
+      `http://52.14.30.14:8000?token=${localStorage.getItem('accessToken')}`,
+      {
+        transports: ['websocket'],
+      },
+    );
   }
-  subscribe(chatRoom, callback) {
-    this.client.connect({}, () => {
-      this.client.subscribe('/topic/' + chatRoom, message => {
-        callback(message);
-      });
-    });
+  joinRoom(roomId) {
+    this.client.emit('joinRoom', roomId);
   }
-  sendMessage(roomId, sender, message) {
-    const data = {
-      chatRoomId: roomId,
-      sender,
-      message,
-    };
-    this.client.send('/app/chat/send', {}, data);
+  send(message, userId, target) {
+    this.client.emit('send', { message, roomId: `${target}` });
+  }
+  receive(callback) {
+    this.client.on('receive', callback);
+  }
+  error(callback) {
+    this.client.on('error', callback);
+  }
+  connectError(callback) {
+    this.client.on('connect_error', callback);
+  }
+  disconnect() {
+    this.client.disconnect();
+  }
+  reset() {
+    this.client.removeEventListener('send');
+    this.client.removeEventListener('receive');
+    this.client.removeEventListener('error');
+    this.client.removeEventListener('connect_error');
   }
 }
 
 export const getChattingList = id => {
-  const url = getUrl(ROOMS_URL, id);
+  const url = getUrl(ROOM_URL, id);
   return getRequest().get(url);
 };
 
