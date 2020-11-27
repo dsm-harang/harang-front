@@ -8,8 +8,8 @@ import {
 } from './SigninStyle';
 import { createGlobalStyle } from 'styled-components';
 import { getRequest } from '../../lib/api/api';
-import { useHistory } from 'react-router-dom';
-import { Link } from '@material-ui/core';
+import { useHistory, Link } from 'react-router-dom';
+
 const GlobalStyle = createGlobalStyle`
 	body {
 		padding: 0;
@@ -50,7 +50,7 @@ const SignIn = () => {
     callApi(userData);
   };
   return (
-    <Container>
+    <Container className="con">
       <GlobalStyle />
       <SigninContainer>
         <>
@@ -76,7 +76,7 @@ const SignIn = () => {
           </Link>
         </>
       </SigninContainer>
-      <Background></Background>
+      <Background />
     </Container>
   );
 };

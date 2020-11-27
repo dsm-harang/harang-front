@@ -1,33 +1,19 @@
-import Stomp from 'stompjs';
-import SockJs from 'sockjs-client';
+import IO from 'socket.io-client';
 import { SERVER_URL, getRequest, getUrl } from './api';
-import { ROOM_URL, ROOMS_URL } from './ServerUrl';
+import { ROOM_URL } from './ServerUrl';
 
 class Socket {
   constructor() {
-    this.isConnected = false;
-    const socket = new SockJs('/chat');
-    this.client = Stomp.over(socket);
+    const chattingUrl = `${SERVER_URL}`;
+    this.IO = IO(chattingUrl);
   }
-  subscribe(chatRoom, callback) {
-    this.client.connect({}, () => {
-      this.client.subscribe('/topic/' + chatRoom, message => {
-        callback(message);
-      });
-    });
-  }
-  sendMessage(roomId, sender, message) {
-    const data = {
-      chatRoomId: roomId,
-      sender,
-      message,
-    };
-    this.client.send('/app/chat/send', {}, data);
+  sendChatting(text) {
+    this.IO.emit('chat');
   }
 }
 
 export const getChattingList = id => {
-  const url = getUrl(ROOMS_URL, id);
+  const url = getUrl(ROOM_URL, id);
   return getRequest().get(url);
 };
 

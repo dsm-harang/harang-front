@@ -22,7 +22,6 @@ const MyInfo = () => {
     tags.pop();
     return tags;
   };
-
   const [userData, setUserData] = useState({
     id: '-1',
     name: 'undefined',

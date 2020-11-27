@@ -33,15 +33,15 @@ body{
 }`;
 
 const SignUp = () => {
-  const [name, setName] = useState();
-  const [id, setId] = useState();
-  const [password, setPassword] = useState();
-  const [passwordConfrim, setPasswordConfrim] = useState();
-  const [age, setAge] = useState();
+  const [name, setName] = useState('');
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfrim, setPasswordConfrim] = useState('');
+  const [age, setAge] = useState('');
   const [agree, setAgree] = useState(false);
-  const [file, setFile] = useState();
-  const [fileResult, setFileResult] = useState();
-  const [phoneNum, setPhoneNum] = useState();
+  const [file, setFile] = useState('');
+  const [fileResult, setFileResult] = useState('');
+  const [phoneNum, setPhoneNum] = useState('');
 
   const history = useHistory();
   const uploadImage = e => {
@@ -87,7 +87,7 @@ const SignUp = () => {
         <FontSetting />
         <Title>SIGN UP</Title>
         <SignUpBox>
-          <ProfileImage profile={fileResult} />
+          <ProfileImage profile={fileResult} readOnly />
           <input type="file" files={file} onChange={uploadImage} />
           <InputSet
             type="text"
