@@ -17,10 +17,11 @@ import {
   reportUser,
   getCommentRequireList,
   getRequestApproveList,
+  setUserInfo,
+  SERVER_URL,
 } from '../../lib/api/Mypage';
+import Header from '../Main/Header/MainHeader';
 
-const MODAL_TYPE_REVIEW = 'review';
-const MODAL_TYPE_REQUEST = 'request';
 const DEFAULT_USER_IMG =
   'https://stafforgserv.com.au/wp-content/uploads/2018/09/user-img.png';
 const Mypage = () => {
@@ -65,7 +66,7 @@ const Mypage = () => {
     if (modalType === 'ReviewModal') return reviewDataArray;
     if (modalType === 'ReportModal') return id;
     return [];
-  }, [requestDataArray, reviewDataArray, modalType]);
+  }, [requestDataArray, reviewDataArray, modalType, id]);
   const setModalDataChangeFunction = useCallback(() => {
     if (modalType === 'RequestApproveModal') return requestDataArrayChange;
     if (modalType === 'ReviewModal') return reviewDataArrayChange;
@@ -80,9 +81,9 @@ const Mypage = () => {
   const getUserInfoAndSetState = useCallback(async () => {
     try {
       const { data } = await getUserInfo(id);
-      imgChange(data.imagePath);
+      imgChange(`${SERVER_URL}/image/${data.imagName}`);
       userNameChange(data.name);
-      idChange(data.user_id);
+      idChange(data.id);
       starChange(data.score);
     } catch (error) {}
   }, [id]);
@@ -97,9 +98,7 @@ const Mypage = () => {
       const { data } = await getRecode();
       const newState = recodeResponseToState(data);
       storageArrayChange(newState);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }, [id]);
   const commentResponseToState = useCallback(response => {
     return response.map(comment => ({
@@ -118,20 +117,19 @@ const Mypage = () => {
   const alarmResponseToState = useCallback((response, index) => {
     return response.map(alarm => ({
       text: alarm.content,
-      id: alarm.id,
-      type: alarm.type,
-      userId: alarm.userId,
+      id: alarm.notifyId,
+      type: alarm.notifyType,
+      userId: alarm.userUuid,
       postId: alarm.postId,
+      notifyId: alarm.notifyId,
     }));
   }, []);
   const getAlarmAndSetState = useCallback(async () => {
     try {
       const { data } = await getAlarm();
-      const newState = alarmResponseToState(data.notify);
+      const newState = alarmResponseToState(data);
       noticeArrayChange(newState);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }, [id]);
   const commentReqireListResponseToState = dataList => {
     return dataList.map(({ userName, src, userId, postId }) => ({
@@ -152,12 +150,23 @@ const Mypage = () => {
     } catch (error) {}
   }, []);
   const requestApproveListResponseToState = useCallback(dataList => {
-    dataList.map(() => ({}));
+    return dataList.map(data => ({
+      name: data.score,
+      name: data.userName,
+      id: data.userId,
+      src: data.imageName,
+    }));
   }, []);
   const getRequestListAndSetState = useCallback(async id => {
     try {
       const { data } = await getRequestApproveList(id);
       const newState = requestApproveListResponseToState(data);
+      requestDataArrayChange(newState);
+    } catch (error) {}
+  });
+  const setUserInfoAndSetState = useCallback(async body => {
+    try {
+      await setUserInfo(body);
     } catch (error) {}
   });
   const renderNoticeComponent = useCallback(
@@ -209,6 +218,7 @@ const Mypage = () => {
         modalIdChange={modalIdChange}
         star={star}
       />
+      <Header />
       <S.MypageDiv>
         <div>
           <div>
@@ -222,6 +232,7 @@ const Mypage = () => {
               modalOn={setModalReportModal}
               modalDelete={modalDelete}
               star={star}
+              setUserInfo={setUserInfoAndSetState}
             />
             <Storage storageContentArray={storageArray} />
           </div>

@@ -10,12 +10,18 @@ import {
   GET_APPROVE_LIST_URL,
 } from './ServerUrl';
 
+export const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
 export const getUserInfo = id => {
   if (id) {
     return getRequest().get(getUrl(PROFILE_URL, id));
   } else {
     return getRequest().get(PROFILE_URL);
   }
+};
+
+export const setUserInfo = body => {
+  return getRequest().put(PROFILE_URL, body);
 };
 
 export const setComment = (id, body) => {
