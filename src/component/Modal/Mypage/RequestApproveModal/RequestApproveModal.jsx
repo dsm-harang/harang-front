@@ -30,7 +30,7 @@ const RequestApproveModal = ({
     [requestData],
   );
   const buttonClickHandler = useCallback(() => {
-    approveUsers(requestData).then(() => {
+    Promise.all(approveUsers(requestData)).then(() => {
       onDelete(modalId);
       modalIdChange(-1);
     });
@@ -44,16 +44,7 @@ const RequestApproveModal = ({
     ));
   }, [requestData]);
   const approveUsers = members =>
-    new Promise((resolve, reject) => {
-      try {
-        members.map(member => {
-          requestFunction(member.id);
-        });
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
+    members.map(member => requestFunction(member.id));
   return (
     <S.RequestModal>
       <div>{setContent()}</div>
