@@ -44,7 +44,7 @@ const Modal = ({
             {modalType === 'ReportModal' && (
               <ReportModal
                 requestFunction={requestFunction}
-                id={data}
+                data={data}
                 onDelete={onDelete}
               />
             )}
