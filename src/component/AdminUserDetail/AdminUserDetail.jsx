@@ -24,7 +24,18 @@ const AdminUserDetail = () => {
   const getUserInfoAndSetState = useCallback(async () => {
     try {
       const { data } = await getAdminUserInfo(userId);
+      const newUserInfo = userInfoResponseToState(data);
+      userInfoChange(newUserInfo);
+      reportListChange(data.content);
     } catch (error) {}
+  }, []);
+  const userInfoResponseToState = useCallback(data => {
+    return {
+      src: data.imageName,
+      name: data.name,
+      star: data.score,
+      userId: data.userId,
+    };
   }, []);
   const deleteUserAndChangePage = useCallback(async () => {
     try {
