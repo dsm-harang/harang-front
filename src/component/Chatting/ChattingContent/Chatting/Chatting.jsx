@@ -6,12 +6,12 @@ import ChattingInput from './ChattingInput';
 
 const Chatting = ({ chattingLogList, sendChatting }) => {
   const setChattingLog = useCallback(chattingLogList => {
-    return chattingLogList.map(chattingLog => (
+    return chattingLogList.map((chattingLog, index) => (
       <ChattingLog
-        isMine={chattingLog.isMine}
+        isMine={chattingLog.mine}
         text={chattingLog.text}
         user={chattingLog.user}
-        key={`${chattingLog.user}${chattingLog.text}`}
+        key={`${chattingLog.user}-${chattingLog.text}-${index}`}
       />
     ));
   }, []);
