@@ -103,6 +103,8 @@ export const ChattingInput = styled.input`
   outline: none;
   border: none;
   border-radius: 50px;
+  padding-left: 20px;
+  box-sizing: border-box;
 `;
 
 export const ChattingLogList = styled.div`
