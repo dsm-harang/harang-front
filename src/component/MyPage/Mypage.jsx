@@ -102,14 +102,15 @@ const Mypage = () => {
   }, [id]);
   const commentResponseToState = useCallback(response => {
     return response.map(comment => ({
-      text: comment.score.score_content,
-      userName: comment.score.target_name,
-      star: comment.score.score,
+      text: comment.comment,
+      userName: comment.senderName,
+      star: comment.score,
     }));
   }, []);
   const getCommentAndSetState = useCallback(async () => {
     try {
       const { data } = await getComment(id);
+      console.log(data);
       const newState = commentResponseToState(data);
       commentsChange(newState);
     } catch (error) {}
@@ -186,7 +187,7 @@ const Mypage = () => {
       }
       return <AnotherComment comments={comments} />;
     },
-    [noticeArray, setModalReviewModal, setModalRequestModal],
+    [noticeArray, setModalReviewModal, setModalRequestModal, comments],
   );
   const renderCommentComponent = useCallback(
     isMine => {
