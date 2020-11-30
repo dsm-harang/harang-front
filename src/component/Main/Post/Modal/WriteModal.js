@@ -69,7 +69,10 @@ const WriteModal = ({ setWritingVisible }) => {
     postData.append('personnel', personnel);
     postData.append('image', sumnailFile);
 
-    getRequest().post('/post', postData).then(console.log).catch(alert);
+    getRequest()
+      .post('/post', postData)
+      .then(alert('등록이 완료되었습니다'))
+      .catch(alert);
     setWritingVisible(false);
   };
   return (

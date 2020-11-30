@@ -132,15 +132,16 @@ const SignUp = () => {
             value={phoneNum}
             onChange={setPhoneNum}
           />
-          <span onClick={e => setAgree(!agree)} style={{ cursor: 'pointer' }}>
+          <label htmlFor="check">
             개인정보 수집 및 이용에 동의합니다
             <input
+              id="check"
               style={{ margin: '1rem 1rem' }}
               type="checkbox"
               checked={agree}
               onClick={e => setAgree(e.target.checked)}
             ></input>
-          </span>
+          </label>
           <Button
             type="submit"
             width="20rem"

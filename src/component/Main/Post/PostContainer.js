@@ -42,8 +42,9 @@ const PostContainer = () => {
               setPostId={setPostId}
               key={i}
               data={e}
-              isMyPost={false}
+              isMyPost={e.mine}
               tag={tags}
+              delay={i}
             />
           );
         })}

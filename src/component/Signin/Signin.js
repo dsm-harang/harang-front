@@ -31,7 +31,10 @@ const SignIn = () => {
         localStorage.setItem('refreshToken', res.data.refreshToken);
         history.push({ pathname: '/main' });
       })
-      .catch(alert);
+      .catch(
+        err =>
+          err.response.status === 404 && alert('존재하지 않는 아이디 입니다'),
+      );
   };
 
   const onSignin = e => {

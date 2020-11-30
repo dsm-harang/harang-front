@@ -1,27 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import bg from './images/background.png';
 
-const clickedBtn = keyframes`
- 0%, 100%, 20%, 53%, 80% {
-    transition-timing-function: cubic-bezier(0.215, .61, .355, 1);
-    transform: translate3d(0, 0, 0)
-  }
-  40%,
-  43% {
-    transition-timing-function: cubic-bezier(0.755, .050, .855, .060);
-    transform: translate3d(0, -30px, 0)
-  }
-  70% {
-    transition-timing-function: cubic-bezier(0.755, .050, .855, .060);
-    transform: translate3d(0, -15px, 0)
-  }
-  90% {
-    transform: translate3d(0, -4px, 0)
-  }
-
-
-`;
-
 const fadeInLeft = keyframes` {
   0% {
     opacity: 0;
@@ -89,8 +68,9 @@ export const SigninBtn = styled.button`
   background-color: #a48fe0;
   color: #fffff3;
   border: none;
-  &:focus {
-    animation: ${clickedBtn} 1s 0.1s 1 running normal;
+
+  &:active {
+    outline: 3px solid black;
   }
 `;
 export const Background = styled.div`

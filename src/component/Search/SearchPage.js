@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './SearchPageStyle';
-import Mainheader from './Header/MainHeader';
-import { getRequest } from '../../lib/api/api';
-import { Posts } from './Post/PostContainerStyle';
-import Post from './Post/Post';
+import Mainheader from '../Main/Header/MainHeader';
+import { getRequest, getUrl } from '../../lib/api/api';
+import { Posts } from '../Main/Post/PostContainerStyle';
+import Post from '../Main/Post/Post';
 
-import WriteModal from './Post/Modal/WriteModal';
-import ReportModal from './Post/Modal/ReportModal';
+import WriteModal from '../Main/Post/Modal/WriteModal';
+import ReportModal from '../Main/Post/Modal/ReportModal';
 
 const SearchPage = ({ location }) => {
   const [postList, setPostList] = useState([]);
   const [writingVisible, setWritingVisible] = useState(false);
   const [reportVisible, setReportVisible] = useState(false);
   const [postId, setPostId] = useState();
-
-  console.log(location);
-  const tag = location.search.replace('?', '');
+  const [tag, setTag] = useState(location.search.replace('?', ''));
 
   useEffect(() => {
+    const searchUrl = getUrl('/search/tag', location.search.replace('?', ''));
+    setTag(location.search.replace('?', ''));
+    console.log(searchUrl);
     getRequest()
-      .get(`/search/tag`)
-      .then(res => setPostList(res.data));
-  }, []);
+      .get(searchUrl)
+      .then(res => setPostList(res.data))
+      .catch(
+        err => err.response.status === 404 && alert('검색 결과가 없습니다'),
+      );
+  }, [location]);
 
   return (
     <>
@@ -41,7 +45,7 @@ const SearchPage = ({ location }) => {
               setPostId={setPostId}
               key={i}
               data={e}
-              isMyPost={e.isMine}
+              isMyPost={e.mine}
               tag={tags}
             />
           );

@@ -13,11 +13,9 @@ import { getRequest, SERVER_URL } from '../../../lib/api/api';
 import { useHistory } from 'react-router';
 import PostModal from './Modal/PostModal';
 import EditModal from './Modal/EditModal';
-const Post = ({ setReportVisible, setPostId, data, isMyPost, tag }) => {
+const Post = ({ setReportVisible, setPostId, data, isMyPost, tag, delay }) => {
   const [postVisible, setPostVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
-  const [profile, setProfile] = useState(data.profileImage);
-  const [sumnail, setSumnail] = useState(data.postImage);
   const history = useHistory();
 
   const applicationSubmit = () => {
@@ -47,7 +45,7 @@ const Post = ({ setReportVisible, setPostId, data, isMyPost, tag }) => {
   };
 
   return (
-    <Container>
+    <Container delay={delay}>
       {postVisible && (
         <PostModal setPostVisible={setPostVisible} postId={data.postId} />
       )}
