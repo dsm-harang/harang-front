@@ -132,22 +132,24 @@ const Mypage = () => {
     } catch (error) {}
   }, [id]);
   const commentReqireListResponseToState = dataList => {
-    return dataList.map(({ userName, src, userId, postId }) => ({
+    return dataList.map(({ userName, imageName, userUuid, postId }) => ({
       name: userName,
-      src: src,
+      src: imageName,
       star: 0,
-      id: id,
       review: '',
-      userId: userId,
+      userId: userUuid,
       postId: postId,
     }));
   };
   const getCommentReqireListAndSetState = useCallback(async id => {
     try {
       const { data } = await getCommentRequireList(id);
-      const newState = commentReqireListResponseToState(data.listScore);
+      const newState = commentReqireListResponseToState(data);
+      console.log(newState);
       reviewDataArrayChange(newState);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
   const requestApproveListResponseToState = useCallback(dataList => {
     return dataList.map(data => ({
@@ -155,6 +157,7 @@ const Mypage = () => {
       name: data.userName,
       id: data.userId,
       src: data.imageName,
+      applicationId: data.applicationId,
     }));
   }, []);
   const getRequestListAndSetState = useCallback(async id => {
@@ -206,6 +209,9 @@ const Mypage = () => {
     getCommentAndSetState();
     getRecodeAndSetState();
   }, []);
+  useEffect(() => {
+    console.log(reviewDataArray);
+  }, [reviewDataArray]);
   return (
     <>
       <Modal
