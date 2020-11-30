@@ -121,6 +121,7 @@ export const ChattingLog = styled.div`
   > p {
     width: 100%;
     margin-right: 10px;
+    color: black;
   }
   > div {
     min-height: 30px;
@@ -160,6 +161,8 @@ export const ChattingLog = styled.div`
           > p {
             margin-left: 10px;
             text-align: left;
+            color: black;
+            padding-left: 5px;
           }
         `};
 `;
