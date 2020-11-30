@@ -55,3 +55,7 @@ export const getCommentRequireList = id => {
 export const getRequestApproveList = id => {
   return getRequest().get(getUrl(GET_APPROVE_LIST_URL, id));
 };
+
+export const deleteNotify = id => {
+  return getRequest().delete(getUrl(NOTIFY_URL, id));
+};
