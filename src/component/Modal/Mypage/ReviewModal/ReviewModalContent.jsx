@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { SERVER_URL } from '../../../../lib/api/api';
 import { setComment } from '../../../../lib/api/Mypage';
 import Star from '../../../Default/Star';
 import * as S from '../../style';
@@ -20,7 +21,7 @@ const RequestApproveModalContent = ({
   const [isReviewModalOn, modalOnChange] = useState(false);
   const clickStarWithId = useCallback(
     star => {
-      starChange(id, star);
+      starChange(userId, star);
     },
     [id, starChange],
   );
@@ -87,7 +88,7 @@ const RequestApproveModalContent = ({
       />
 
       <S.BoardContent>
-        <S.BoardUserImg src={src} />
+        <S.BoardUserImg src={`${SERVER_URL}/image/${src}`} />
         <S.BoardContentText>{name}</S.BoardContentText>
         <Star star={star} />
         <S.ReviewButton onClick={onModal}>코멘트 작성</S.ReviewButton>
