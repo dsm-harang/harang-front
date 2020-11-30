@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import * as S from '../../style';
 
 const ReportModal = ({ requestFunction, data, onDelete }) => {
@@ -26,13 +26,8 @@ const ReportModal = ({ requestFunction, data, onDelete }) => {
   }, [data, reportText]);
   return (
     <S.ReportModal>
-      <S.ReportModalTextArea
-        value={reportText}
-        onChange={textAreaChangeHandler}
-      />
-      <S.ReportModalButton onClick={sendReportButtonClickHandler}>
-        신고하기
-      </S.ReportModalButton>
+      <S.ReportModalTextArea />
+      <S.ReportModalButton>신고하기</S.ReportModalButton>
     </S.ReportModal>
   );
 };

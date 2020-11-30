@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getRequest } from '../../../../lib/api/api';
+import { getRequest, SERVER_URL } from '../../../../lib/api/api';
 import {
   Overlay,
   PostModalContainer,
@@ -10,20 +10,25 @@ import {
 } from './ModalStyle';
 
 const PostModal = ({ setPostVisible, postId }) => {
-  const [postData, setPostData] = useState({
-    title: 'TITLE',
-    content: 'content',
-    meetTime: '2020-01-19',
-    address: '대덕소프트웨어 마이스터 고등학교',
-    personnel: 3,
-  });
+  const [postData, setPostData] = useState({});
 
   useEffect(() => {
     getRequest()
       .get(`/post/${postId}`)
-      .then(res => setPostData(res.data))
-      .catch(alert);
+      .then(res => setPostData(res.data));
   }, []);
+
+  const dateParse = () => {
+    console.log(postData.meetTime != undefined);
+    const dateData = postData.meetTime.split(' ');
+    const date = dateData[0];
+    const timeData = dateData[1].split(':');
+    const hour = parseInt(timeData[0]) > 12 ? '오후' : '오전';
+
+    return `${date} ${hour} ${parseInt(timeData[0]) % 12}시 ${
+      parseInt(timeData[1]) > 0 ? timeData[1] + '분' : ''
+    }`;
+  };
 
   return (
     <div>
@@ -33,13 +38,13 @@ const PostModal = ({ setPostVisible, postId }) => {
         <PostInfo>
           <Sumnail
             className="sumnail"
-            src={`data:image/png;base64,${postData.postImage}`}
+            src={`${SERVER_URL}image/${postData.image}`}
           />
           <div className="info">
             <p className="title">{postData.title}</p>
             <div className="time">
               <i className="fas fa-clock"></i>
-              {postData.meetTime}
+              {postData.meetTime != undefined && dateParse()}
             </div>
             <div className="location">
               <i className="fas fa-map-marker-alt"></i>

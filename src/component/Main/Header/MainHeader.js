@@ -15,7 +15,7 @@ const MainHeader = () => {
   const [searchCookie, setSearchCookie] = useCookies(['search']);
   const history = useHistory();
   const goSearch = () => {
-    history.push({ pathname: '/search', state: { search: search } });
+    history.push({ pathname: `/search`, search: search });
   };
 
   const saveCurSearch = () => {

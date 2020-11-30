@@ -10,7 +10,6 @@ const Modal = ({
   dataChange,
   modalId,
   modalIdChange,
-  requestFunction,
 }) => {
   const eventPreventHandler = useCallback(e => {
     e.stopPropagation();
@@ -28,7 +27,6 @@ const Modal = ({
                 onDelete={onDelete}
                 modalId={modalId}
                 modalIdChange={modalIdChange}
-                requestFunction={requestFunction}
               />
             )}
             {modalType === 'ReviewModal' && (
@@ -38,6 +36,7 @@ const Modal = ({
                 onDelete={onDelete}
                 modalId={modalId}
                 modalIdChange={modalIdChange}
+
                 requestFunction={requestFunction}
               />
             )}
@@ -48,6 +47,7 @@ const Modal = ({
                 onDelete={onDelete}
               />
             )}
+            {modalType === 'ReportModal' && <ReportModal />}
           </div>
         </S.ModalBackground>
       ) : (

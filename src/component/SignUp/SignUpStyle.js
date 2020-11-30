@@ -1,7 +1,43 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeInDown = keyframes`
+{
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0)
+  }
+  100% {
+    opacity: 1;
+    transform: none
+  }
+}`;
+
+const clickedBtn = keyframes`
+ 0%, 100%, 20%, 53%, 80% {
+    transition-timing-function: cubic-bezier(0.215, .61, .355, 1);
+    transform: translate3d(0, 0, 0)
+  }
+  40%,
+  43% {
+    transition-timing-function: cubic-bezier(0.755, .050, .855, .060);
+    transform: translate3d(0, -30px, 0)
+  }
+  70% {
+    transition-timing-function: cubic-bezier(0.755, .050, .855, .060);
+    transform: translate3d(0, -15px, 0)
+  }
+  90% {
+    transform: translate3d(0, -4px, 0)
+  }
+
+`;
 
 export const Container = styled.div`
+  opacity: 0;
+  animation: ${fadeInDown} 1.5s 0.1s 1 running forwards;
+
   margin-top: 1rem;
+  margin-bottom: 3rem;
   width: 100%;
   height: 100%;
   display: flex;
@@ -31,6 +67,8 @@ export const Name = styled.div`
   font-family: 'S-CoreDream-3Light';
 `;
 export const WriteLabel = styled.input`
+  box-sizing: border-box;
+  padding: 1rem 1rem;
   border: none;
   outline: none;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
@@ -47,12 +85,11 @@ export const Button = styled.button`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   border: none;
-  outline: none;
   padding: 0 0.5rem;
   font-size: 1rem;
 
-  &:active {
-    box-shadow: inset 1px 1px 3px 1px rgba(0, 0, 0, 0.4);
+  &:focus {
+    animation: ${clickedBtn} 1s 0.1s 1 running normal;
   }
 `;
 

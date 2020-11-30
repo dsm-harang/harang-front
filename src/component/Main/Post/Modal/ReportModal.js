@@ -11,10 +11,16 @@ const ReportModal = ({ setReportVisible, postId }) => {
   const [reason, setReason] = useState();
 
   const onReportSubmit = e => {
-    e.preventdefault();
+    e.preventDefault();
     const content = new FormData();
-    content.append('content', reason);
-    getRequest().post(`/post/report/${postId}`, content);
+    content.append('content', reason); /*= {
+      content: reason,
+    };*/
+    getRequest()
+      .post(`/user/report/${postId}`, content)
+      .then(alert('신고가 접수되었습니다'))
+      .catch(alert)
+      .then(setReportVisible(false));
   };
 
   return (

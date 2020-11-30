@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Sumnail,
@@ -9,80 +9,82 @@ import {
   ReportButton,
 } from './PostStyle';
 import StarCounter from '../StarCounter';
-import { getRequest } from '../../../lib/api/api';
+import { getRequest, SERVER_URL } from '../../../lib/api/api';
 import { useHistory } from 'react-router';
 import PostModal from './Modal/PostModal';
-const Post = ({
-  setEditVisible,
-  setReportVisible,
-  setPostId,
-  postId,
-  writerId,
-  writerScore,
-  title,
-  content,
-  writer,
-  meetTime,
-  address,
-  createdAt,
-  personnel,
-  profile,
-  sumnail,
-  isMyPost,
-}) => {
+import EditModal from './Modal/EditModal';
+const Post = ({ setReportVisible, setPostId, data, isMyPost, tag, delay }) => {
   const [postVisible, setPostVisible] = useState(false);
+  const [editVisible, setEditVisible] = useState(false);
   const history = useHistory();
 
   const applicationSubmit = () => {
-    getRequest().post(`post/${postId}`);
+    getRequest()
+      .post(`post/${data.postId}`)
+      .then(alert('참여신청이 완료되었습니다'));
   };
   const deletePost = () => {
-    getRequest().delete(`/post/${postId}`);
+    getRequest()
+      .delete(`/post/${data.postId}`)
+      .then(alert('삭제되었습니다'))
+      .catch(alert);
   };
   const gotoProfile = () => {
-    history.push({ pathname: `/mypage/${writerId}` });
+    history.push({ pathname: `/mypage/${data.writerId}` });
   };
-  console.log('postId : ' + postId);
+
+  const dateParse = () => {
+    const dateData = data.meetTime.split('T');
+    const date = dateData[0];
+    const timeData = dateData[1].split(':');
+    const hour = parseInt(timeData[0]) > 12 ? '오후' : '오전';
+
+    return `${date} ${hour} ${parseInt(timeData[0]) % 12}시 ${
+      parseInt(timeData[1]) > 0 ? timeData[1] + '분' : ''
+    }`;
+  };
+
   return (
-    <Container>
+    <Container delay={delay}>
       {postVisible && (
-        <PostModal setPostVisible={setPostVisible} postId={postId} />
+        <PostModal setPostVisible={setPostVisible} postId={data.postId} />
       )}
-      <Sumnail src={sumnail} />
+      {editVisible && (
+        <EditModal setEditVisible={setEditVisible} postId={data.postId} />
+      )}
+      <Sumnail src={`${SERVER_URL}image/${data.postImage}`} />
       <Contents>
         <div
           className="title"
           onClick={() => {
             setPostVisible(true);
-            setPostId(postId);
           }}
         >
-          {title}
+          {data.title}
         </div>
-        <div className="content">{content}</div>
+        <div className="content">{data.content}</div>
         <div className="info">
           <div className="time">
             <i className="fas fa-clock"></i>
-            {meetTime}
+            {dateParse()}
           </div>
           <div className="location">
             <i className="fas fa-map-marker-alt"></i>
-            {address}
+            {data.address}
           </div>
           <div className="Personnel">
             <i className="fas fa-user-friends"></i>
-            {personnel}명
+            {data.personnel}명
           </div>
         </div>
         <div className="tags">
-          <HashTag>#tag</HashTag>
-          <HashTag>#tag</HashTag>
-          <HashTag>#tag</HashTag>
+          {tag && tag.map((e, i) => <HashTag key={i}>#{e}</HashTag>)}
         </div>
+
         <ReportButton
           onClick={e => {
             setReportVisible(true);
-            setPostId(postId);
+            setPostId(data.postId);
           }}
         >
           <i
@@ -91,19 +93,19 @@ const Post = ({
           ></i>
           신고하기
         </ReportButton>
-        <p className="date">{createdAt}에 올라온 글입니다</p>
+        <p className="date">{data.createdAt}에 올라온 글입니다</p>
       </Contents>
       <Sides>
         <div className="profile">
-          <img src={profile} />
-          <p className="writer">'{writer}'님</p>
+          <img src={`${SERVER_URL}image/${data.profileImage}`} />
+          <p className="writer">'{data.writer}'님</p>
           <p>{StarCounter(2.5)}</p>
           <div className="gotoProfile" onClick={gotoProfile}>
             프로필 보기
           </div>
         </div>
         {isMyPost ? (
-          <div onClick={e => setPostId(postId)}>
+          <div onClick={e => setPostId(data.postId)}>
             <Button
               color="#a48fe0"
               isMypost={true}
@@ -118,7 +120,7 @@ const Post = ({
             </Button>
           </div>
         ) : (
-          <div onClick={e => setPostId(postId)}>
+          <div onClick={e => setPostId(data.postId)}>
             <Button color="#a48fe0" onClick={applicationSubmit}>
               참여신청
             </Button>

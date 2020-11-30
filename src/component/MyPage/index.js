@@ -1,2 +1,1 @@
-import Mypage from './Mypage';
-export default Mypage;
+export { default as Mypage } from './Mypage';

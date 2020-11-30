@@ -33,15 +33,15 @@ body{
 }`;
 
 const SignUp = () => {
-  const [name, setName] = useState();
-  const [id, setId] = useState();
-  const [password, setPassword] = useState();
-  const [passwordConfrim, setPasswordConfrim] = useState();
-  const [age, setAge] = useState();
+  const [name, setName] = useState('');
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfrim, setPasswordConfrim] = useState('');
+  const [age, setAge] = useState('');
   const [agree, setAgree] = useState(false);
-  const [file, setFile] = useState();
-  const [fileResult, setFileResult] = useState();
-  const [phoneNum, setPhoneNum] = useState();
+  const [file, setFile] = useState('');
+  const [fileResult, setFileResult] = useState('');
+  const [phoneNum, setPhoneNum] = useState('');
 
   const history = useHistory();
   const uploadImage = e => {
@@ -87,7 +87,7 @@ const SignUp = () => {
         <FontSetting />
         <Title>SIGN UP</Title>
         <SignUpBox>
-          <ProfileImage profile={fileResult} />
+          <ProfileImage profile={fileResult} readOnly />
           <input type="file" files={file} onChange={uploadImage} />
           <InputSet
             type="text"
@@ -132,15 +132,16 @@ const SignUp = () => {
             value={phoneNum}
             onChange={setPhoneNum}
           />
-          <span onClick={e => setAgree(!agree)} style={{ cursor: 'pointer' }}>
+          <label htmlFor="check">
             개인정보 수집 및 이용에 동의합니다
             <input
+              id="check"
               style={{ margin: '1rem 1rem' }}
               type="checkbox"
               checked={agree}
               onClick={e => setAgree(e.target.checked)}
             ></input>
-          </span>
+          </label>
           <Button
             type="submit"
             width="20rem"

@@ -1,10 +1,26 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import bg from './images/background.png';
+
+const fadeInLeft = keyframes` {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0)
+  }
+  100% {
+    opacity: 1;
+    transform: none
+  }
+}`;
 
 export const Container = styled.div`
   display: flex;
+  background-image: url(${bg});
+  background-size: cover;
 `;
 
 export const SigninContainer = styled.form`
+  opacity: 0;
+  animation: ${fadeInLeft} 1s 0.1s 1 running forwards;
   width: 50rem;
   height: 100vh;
   background-color: white;
@@ -26,21 +42,22 @@ export const SigninContainer = styled.form`
 `;
 
 export const InputLabel = styled.input`
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   width: 20rem;
   height: 2rem;
   display: flex;
   justify-content: center;
   border: none;
-  border-bottom: 3px solid;
+  outline: none;
+  border-bottom: 1px solid;
 
   font-size: 20px;
   font-family: 'S-CoreDream-3Light';
 
   padding: 3px 5px;
-  &:hover,
-  &:focus {
-    outline: none;
+
+  &:active {
+    border: 1 solid black;
   }
 `;
 
@@ -50,12 +67,13 @@ export const SigninBtn = styled.button`
   font-family: 'S-CoreDream-3Light';
   background-color: #a48fe0;
   color: #fffff3;
-
-  outline: none;
   border: none;
+
+  &:active {
+    outline: 3px solid black;
+  }
 `;
 export const Background = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: #566270;
 `;

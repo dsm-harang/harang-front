@@ -12,7 +12,6 @@ import {
   TagItem,
 } from './ModalStyle';
 import Map from '../../../Map/Map';
-import { configs } from 'eslint-plugin-prettier';
 
 const WriteModal = ({ setWritingVisible }) => {
   const reader = new FileReader();
@@ -63,14 +62,17 @@ const WriteModal = ({ setWritingVisible }) => {
     const postData = new FormData();
     postData.append('title', title);
     postData.append('tag', tagItems.toString().replace(/,/gi, ''));
-    postData.append('meetTime', date + ' ' + time + ':' + '00');
+    postData.append('meetTime', `${date} ${time}:00`);
     postData.append('content', content);
     postData.append('ageLimit', ageLimit);
     postData.append('address', address);
     postData.append('personnel', personnel);
     postData.append('image', sumnailFile);
 
-    getRequest().post('/post', postData).then(console.log).catch(alert);
+    getRequest()
+      .post('/post', postData)
+      .then(alert('등록이 완료되었습니다'))
+      .catch(alert);
     setWritingVisible(false);
   };
   return (

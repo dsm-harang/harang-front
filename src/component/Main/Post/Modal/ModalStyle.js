@@ -53,7 +53,8 @@ export const PostInfo = styled.div`
   }
 `;
 export const Contents = styled.div`
-  padding: 1rem 1rem;
+  box-sizing: border-box;
+  padding: 1rem 5rem;
   width: 100%;
   height: 100%;
 `;
@@ -100,7 +101,7 @@ export const WriteModalContainer = styled.form`
     grid-column: span 3;
     height: 100%;
     padding: 0 5px;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   .content {
     grid-column: span 3;
