@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import ReviewModalContent from './ReviewModalContent';
 import * as S from '../../style';
+import { deleteNotify } from '../../../../lib/api/Mypage';
 
 const ReviewModal = ({
   requestData,
@@ -13,7 +14,7 @@ const ReviewModal = ({
   const getStarChangedDataList = useCallback((requestData, id, star) => {
     return requestData.map(data => {
       const buffer = { ...data };
-      if (buffer.id === id) {
+      if (buffer.userId === id) {
         buffer.star = star;
       }
       return buffer;
@@ -29,9 +30,10 @@ const ReviewModal = ({
     });
   }, []);
   const buttonClickHandler = useCallback(() => {
+    deleteNotify(modalId);
     onDelete(modalId);
     modalIdChange(-1);
-  }, []);
+  }, [modalId]);
   const getDeleteDataList = useCallback(id => {
     return requestData.filter(data => data.id !== id);
   });
