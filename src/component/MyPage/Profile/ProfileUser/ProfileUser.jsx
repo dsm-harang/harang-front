@@ -15,7 +15,7 @@ const Profile = ({ img, imgChange, userName, isMine, star, setUserInfo }) => {
       <S.MypageProfileDataWrapper>
         <div>
           <S.MypageUserName>{userName}</S.MypageUserName>
-          <Star star={3} />
+          <Star star={star} />
         </div>
       </S.MypageProfileDataWrapper>
     </S.MypageUser>

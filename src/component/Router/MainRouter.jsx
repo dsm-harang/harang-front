@@ -1,13 +1,13 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import {
   Mypage,
   Chatting,
   ErrorPage,
   MainPage,
-  SearchPage,
   SignIn,
   SignUp,
+  SaerchPage,
 } from '../';
 
 const MainRouter = () => {
@@ -18,8 +18,8 @@ const MainRouter = () => {
       <Route path="/chatting" component={Chatting} />
       <Route path="/main" component={MainPage} />
       <Route path="/signup" component={SignUp} />
-      <Route exact path="/search" component={SearchPage} />
       <Route exact path="/login" component={SignIn} />
+      <Route exact path="/search/:keyword?" component={SaerchPage} />
       <Route path="*" component={ErrorPage} />
     </Switch>
   );

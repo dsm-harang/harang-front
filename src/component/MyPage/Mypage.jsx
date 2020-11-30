@@ -27,29 +27,19 @@ const DEFAULT_USER_IMG =
 const Mypage = () => {
   const location = useLocation();
   const [id, idChange] = useState(location.pathname.split('/')[2]);
-  const [isMine, isMineChange] = useState(true);
-  const [noticeArray, noticeArrayChange] = useState([
-    { text: '리뷰를 작성해 주세요.', id: 1, type: MODAL_TYPE_REVIEW },
-  ]);
-  const [storageArray, storageArrayChange] = useState([
-    { text: '무슨무슨무슨무슨무슨무슨무슨무슨무슨무슨 체험 참여.', id: 1 },
-  ]);
+  const [isMine, isMineChange] = useState();
+  const [noticeArray, noticeArrayChange] = useState([]);
+  const [storageArray, storageArrayChange] = useState([]);
   const [img, imgChange] = useState(DEFAULT_USER_IMG);
-  const [requestDataArray, requestDataArrayChange] = useState([
-    { name: '오준상', src: DEFAULT_USER_IMG, star: 4, isChecked: false, id: 1 },
-  ]);
-  const [userName, userNameChange] = useState('누군가');
-  const [description, descriptionChange] = useState(
-    '제 이름은 누군가입니다. 누굴까요 ㅋㅋㄹㅃㅃ',
-  );
-  const [comments, commentsChange] = useState([
-    { text: '댓그으을', userName: '오준상', star: 5 },
-  ]);
-  const [reviewDataArray, reviewDataArrayChange] = useState([
-    { name: '오준상', src: DEFAULT_USER_IMG, star: 0, id: 1, review: '' },
-  ]);
+  const [requestDataArray, requestDataArrayChange] = useState([]);
+  const [userName, userNameChange] = useState('');
+  const [description, descriptionChange] = useState();
+  const [comments, commentsChange] = useState([]);
+  const [reviewDataArray, reviewDataArrayChange] = useState([]);
   const [modalId, modalIdChange] = useState(-1);
   const [modalType, modalTypeChange] = useState('');
+  const [star, starChange] = useState(0);
+
   const modalDelete = id => {
     modalTypeChange('');
     if (typeof id === 'number') {
@@ -60,20 +50,21 @@ const Mypage = () => {
     const buffer = noticeArray.filter(alarm => alarm.id !== id);
     noticeArrayChange(buffer);
   };
-  const setModalRequestModal = useCallback(() => {
+  const setModalRequestModal = useCallback(id => {
     modalTypeChange('RequestApproveModal');
+    getRequestListAndSetState(id);
   }, []);
-  const setModalReviewModal = useCallback(() => {
+  const setModalReviewModal = useCallback(id => {
     modalTypeChange('ReviewModal');
+    getCommentReqireListAndSetState(id);
   }, []);
   const setModalReportModal = useCallback(() => {
     modalTypeChange('ReportModal');
   });
   const setModalData = useCallback(() => {
     if (modalType === 'RequestApproveModal') return requestDataArray;
-    else if (modalType === 'ReviewModal') {
-      return reviewDataArray;
-    }
+    if (modalType === 'ReviewModal') return reviewDataArray;
+    if (modalType === 'ReportModal') return id;
     return [];
   }, [requestDataArray, reviewDataArray, modalType, id]);
   const setModalDataChangeFunction = useCallback(() => {
@@ -81,6 +72,12 @@ const Mypage = () => {
     if (modalType === 'ReviewModal') return reviewDataArrayChange;
     return () => {};
   }, [requestDataArrayChange, reviewDataArrayChange, modalType]);
+  const setModalServerRequestFunction = useCallback(() => {
+    if (modalType === 'RequestApproveModal') return setRequestApprove;
+    else if (modalType === 'ReviewModal') return setComment;
+    else if (modalType === 'ReportModal') return reportUser;
+    else return () => {};
+  }, [modalType, setRequestApprove, setComment, reportUser]);
   const getUserInfoAndSetState = useCallback(async () => {
     try {
       const { data } = await getUserInfo(id);
@@ -90,15 +87,15 @@ const Mypage = () => {
       starChange(data.score);
     } catch (error) {}
   }, [id]);
-  const recodeResponseToState = useCallback((response, index) => {
+  const recodeResponseToState = useCallback(response => {
     return response.map(recode => ({
-      id: index,
-      text: recode.title,
+      id: recode.postId,
+      text: recode.postTitle,
     }));
   }, []);
   const getRecodeAndSetState = useCallback(async () => {
     try {
-      const { data } = await getRecode(id);
+      const { data } = await getRecode();
       const newState = recodeResponseToState(data);
       storageArrayChange(newState);
     } catch (error) {}
@@ -121,13 +118,11 @@ const Mypage = () => {
   const alarmResponseToState = useCallback((response, index) => {
     return response.map(alarm => ({
       text: alarm.content,
-
       id: alarm.notifyId,
       type: alarm.notifyType,
       userId: alarm.userUuid,
       postId: alarm.postId,
       notifyId: alarm.notifyId,
-  
     }));
   }, []);
   const getAlarmAndSetState = useCallback(async () => {
@@ -204,8 +199,14 @@ const Mypage = () => {
     [comments],
   );
   useEffect(() => {
-    getUserInfoAndSetState();
-    getAlarmAndSetState();
+    if (location.pathname.split('/')[2]) {
+      isMineChange(false);
+      getUserInfoAndSetState(id);
+    } else {
+      isMineChange(true);
+      getUserInfoAndSetState();
+      getAlarmAndSetState();
+    }
     getCommentAndSetState();
     getRecodeAndSetState();
   }, []);
@@ -219,8 +220,10 @@ const Mypage = () => {
         onDelete={modalDelete}
         data={setModalData()}
         dataChange={setModalDataChangeFunction()}
+        requestFunction={setModalServerRequestFunction()}
         modalId={modalId}
         modalIdChange={modalIdChange}
+        star={star}
       />
       <Header />
       <S.MypageDiv>

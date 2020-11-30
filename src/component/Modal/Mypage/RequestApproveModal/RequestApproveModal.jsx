@@ -9,6 +9,7 @@ const RequestApproveModal = ({
   onDelete,
   modalId,
   modalIdChange,
+  requestFunction,
 }) => {
   const setPersonChecked = useCallback(
     checkedId => {
@@ -35,7 +36,6 @@ const RequestApproveModal = ({
     modalIdChange(-1);
   };
   const buttonClickHandler = useCallback(() => {
-
     Promise.all(approveUsers(requestData)).then(() => {
       sendDeleteNotifyRequest(modalId);
     });
@@ -48,10 +48,8 @@ const RequestApproveModal = ({
       />
     ));
   }, [requestData]);
-
   const approveUsers = members =>
     members.map(member => requestFunction(member.applicationId));
-
   return (
     <S.RequestModal>
       <div>{setContent()}</div>

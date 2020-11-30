@@ -9,18 +9,18 @@ class Socket {
   }
   connect() {
     this.client = io.connect(
-      `http://3.14.87.253:8080?token=${localStorage.getItem('accessToken')}`,
+      `http://10.156.145.149:8080?token=${localStorage.getItem('accessToken')}`,
       {
         transports: ['websocket'],
       },
     );
-    this.client.on('connect', () => {});
+    this.client.on('connect', e => console.log(e));
   }
   joinRoom(roomId) {
     this.client.emit('joinRoom', roomId);
   }
   send(message, userId, target) {
-    console.log(this.client.connected);
+    console.log(message);
     this.client.emit('send', { message, roomId: `${userId}:${target}` });
   }
   receive(callback) {

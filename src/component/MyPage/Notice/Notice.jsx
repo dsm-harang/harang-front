@@ -33,15 +33,16 @@ const Notice = ({
         reviewModalOn(postId);
       } else if (type === 'APPLY') {
         modalIdChange(id);
-        requestModalOn();
-      } else {
+        requestModalOn(postId);
       }
     },
     [],
   );
   return (
     <S.MypageNoticeWrapper>
-      <S.Notice>{createNoticeContentArray(noticeContentArray)}</S.Notice>
+      <S.Notice>
+        <div>{createNoticeContentArray(noticeContentArray)}</div>
+      </S.Notice>
       <S.CalenderButton>
         <S.CalenderIconImg />
         <p>내 일정 확인하기</p>

@@ -1,6 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { checkbox_able, checkbox_disable } from '../../../assets/Modal';
 import { fullStar, emptyStar } from '../../../assets/Mypage';
+
+const modalFade = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-20px);
+  }
+`;
 
 export const ModalBackground = styled.div`
   width: 100%;
@@ -23,8 +33,11 @@ export const RequestModal = styled(Modal)`
   height: 700px;
   padding: 40px;
   box-sizing: border-box;
+  animation-direction: normal;
+  animation-duration: 0.3s;
+  animation-name: ${modalFade};
+  animation-fill-mode: forwards;
   & > div {
-    border: 1px solid black;
     padding: 10px;
     box-sizing: border-box;
     height: 500px;
@@ -51,6 +64,10 @@ export const ReviewModal = styled(Modal)`
   padding: 40px;
   box-sizing: border-box;
   position: relative;
+  animation-direction: normal;
+  animation-duration: 0.3s;
+  animation-name: ${modalFade};
+  animation-fill-mode: forwards;
 `;
 
 export const ReviewButton = styled.div`
@@ -175,6 +192,10 @@ export const ModalDelete = styled.div`
 `;
 
 export const ModalDeleteWrapper = styled.div`
+  animation-direction: normal;
+  animation-duration: 0.3s;
+  animation-name: ${modalFade};
+  animation-fill-mode: forwards;
   width: 100%;
   display: flex;
   justify-content: flex-end;
