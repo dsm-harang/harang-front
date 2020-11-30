@@ -3,19 +3,25 @@ import { getRequest, getUrl } from './api';
 import { ROOM_URL } from './ServerUrl';
 
 class Socket {
+  constructor() {
+    this.connect();
+    this.connectError(e => console.log(e));
+  }
   connect() {
     this.client = io.connect(
-      `http://52.14.30.14:8000?token=${localStorage.getItem('accessToken')}`,
+      `http://3.14.87.253:8080?token=${localStorage.getItem('accessToken')}`,
       {
         transports: ['websocket'],
       },
     );
+    this.client.on('connect', () => {});
   }
   joinRoom(roomId) {
     this.client.emit('joinRoom', roomId);
   }
   send(message, userId, target) {
-    this.client.emit('send', { message, roomId: `${target}` });
+    console.log(this.client.connected);
+    this.client.emit('send', { message, roomId: `${userId}:${target}` });
   }
   receive(callback) {
     this.client.on('receive', callback);
@@ -28,6 +34,9 @@ class Socket {
   }
   disconnect() {
     this.client.disconnect();
+  }
+  getIsConnected() {
+    return this.client.connected;
   }
   reset() {
     this.client.removeEventListener('send');
