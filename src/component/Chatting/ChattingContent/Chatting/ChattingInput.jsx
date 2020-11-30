@@ -4,7 +4,7 @@ import * as S from '../../style';
 const ChattingInput = ({ sendChatting }) => {
   const [input, inputChange] = useState('');
   const sendChattingAndResetInput = input => {
-    if (input.length >= 0) {
+    if (input.length > 0) {
       sendChatting(input);
       inputChange('');
     }
