@@ -9,20 +9,26 @@ const Notice = ({
   modalIdChange,
 }) => {
   const createNoticeContentArray = useCallback(noticeContentArray => {
-    return noticeContentArray.map(({ text, id, type, postId }) => (
+    return noticeContentArray.map(({ text, id, type, postId, notifyId }) => (
       <NoticeContent
         text={text}
         id={id}
         onClick={() =>
-          buttonClickHandler(id, type, requestModalOn, reviewModalOn, postId)
+          buttonClickHandler(
+            notifyId,
+            type,
+            requestModalOn,
+            reviewModalOn,
+            postId,
+          )
         }
-        key={text + id}
+        key={text + notifyId}
       />
     ));
   }, []);
   const buttonClickHandler = useCallback(
     (id, type, requestModalOn, reviewModalOn, postId) => {
-      if (type === 'Score') {
+      if (type === 'Post') {
         modalIdChange(id);
         reviewModalOn(postId);
       } else if (type === 'APPLY') {
