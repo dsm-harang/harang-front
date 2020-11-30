@@ -36,6 +36,15 @@ const Modal = ({
                 onDelete={onDelete}
                 modalId={modalId}
                 modalIdChange={modalIdChange}
+
+                requestFunction={requestFunction}
+              />
+            )}
+            {modalType === 'ReportModal' && (
+              <ReportModal
+                requestFunction={requestFunction}
+                data={data}
+                onDelete={onDelete}
               />
             )}
             {modalType === 'ReportModal' && <ReportModal />}

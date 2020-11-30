@@ -4,6 +4,7 @@ import UserName from './UserName';
 import UserStar from './UserStar';
 import UserControlButtons from './UserControlButtons/UserControlButtons';
 import * as S from '../style';
+import { SERVER_URL } from '../../../lib/api/api';
 
 const UserInfo = ({
   src,
@@ -16,7 +17,7 @@ const UserInfo = ({
 }) => {
   return (
     <S.AdminUserInfo>
-      <UserImg src={src} />
+      <UserImg src={`${SERVER_URL}/image/${src}`} />
       <UserName name={name} id={userId} />
       <UserStar star={star} />
       <UserControlButtons

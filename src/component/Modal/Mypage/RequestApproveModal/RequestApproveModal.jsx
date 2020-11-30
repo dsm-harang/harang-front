@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import RequestApproveModalContent from './RequestApproveModalContent';
 import * as S from '../../style';
+import { deleteNotify } from '../../../../lib/api/Mypage';
 
 const RequestApproveModal = ({
   requestData,
@@ -28,10 +29,17 @@ const RequestApproveModal = ({
     },
     [requestData],
   );
-  const buttonClickHandler = useCallback(() => {
-    onDelete(modalId);
+  const sendDeleteNotifyRequest = id => {
+    deleteNotify(id);
+    onDelete(id);
     modalIdChange(-1);
-  }, []);
+  };
+  const buttonClickHandler = useCallback(() => {
+
+    Promise.all(approveUsers(requestData)).then(() => {
+      sendDeleteNotifyRequest(modalId);
+    });
+  }, [requestData]);
   const setContent = useCallback(() => {
     return requestData.map(data => (
       <RequestApproveModalContent
@@ -40,6 +48,10 @@ const RequestApproveModal = ({
       />
     ));
   }, [requestData]);
+
+  const approveUsers = members =>
+    members.map(member => requestFunction(member.applicationId));
+
   return (
     <S.RequestModal>
       <div>{setContent()}</div>

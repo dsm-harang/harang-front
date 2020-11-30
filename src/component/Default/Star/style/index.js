@@ -8,7 +8,7 @@ export const StarBakcground = styled.div`
 `;
 
 export const Star = styled.div`
-  width: ${props => props.star * 20}%;
+  width: ${props => (props.star >= 0 ? props.star * 20 : 0)}%;
   height: 100%;
   background-image: url(${fiveFullStar});
   background-size: cover;

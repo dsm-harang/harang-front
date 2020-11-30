@@ -22,7 +22,7 @@ const AdminReport = ({ selectedContentIdChange }) => {
   const [postReportList, postReportListChange] = useState([]);
   const requestErrorHandler = useCallback(error => {
     const data = error.response.data;
-    if (data.status === 401 && data.message === ADMIN_NOT_FOUND_MESSAGE) {
+    if (data.status === 403) {
       history.push('/login');
     }
   });

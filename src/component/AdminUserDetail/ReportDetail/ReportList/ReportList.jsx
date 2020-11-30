@@ -4,9 +4,7 @@ import ReportListContent from './ReportListContent';
 
 const ReportList = ({ reportList }) => {
   const setContent = useCallback(reportList => {
-    return reportList.map(report => (
-      <ReportListContent userName={report.name} report={report.report} />
-    ));
+    return reportList.map(report => <ReportListContent report={report} />);
   }, []);
   return (
     <S.AdminReportList>

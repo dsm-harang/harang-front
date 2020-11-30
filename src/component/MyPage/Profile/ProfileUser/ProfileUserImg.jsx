@@ -2,11 +2,15 @@ import React, { useCallback } from 'react';
 import * as S from '../../style';
 import ImgAdd from './ImgAdd';
 
-const ProfileUserImg = ({ img, imgChange, isMine }) => {
+const ProfileUserImg = ({ img, imgChange, isMine, setUserInfo }) => {
   const inputChangeHandler = event => {
     const file = event.target.files[0];
+    const body = new FormData();
+    body.set('image', file);
+    body.set('intro', 'test');
     const fileUrl = fileToStringUrl(file);
     imgChange(fileUrl);
+    setUserInfo(body);
   };
   const fileToStringUrl = useCallback(file => {
     return URL.createObjectURL(file);

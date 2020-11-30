@@ -118,6 +118,7 @@ export const AdminReportListContent = styled.div`
   background-color: #f1f1f1;
   padding: 10px;
   box-sizing: border-box;
+  margin: 10px 0px;
   > .name {
     font-size: 20px;
   }

@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { SERVER_URL } from '../../../../lib/api/api';
 import Star from '../../../Default/Star';
 import * as S from '../../style';
 
@@ -8,13 +9,14 @@ const RequestApproveModalContent = ({
   src,
   star,
   setPersonChecked,
+  applicationId,
 }) => {
   const inputChangeHandler = useCallback(() => {
-    setPersonChecked(id);
-  }, [id]);
+    setPersonChecked(applicationId);
+  }, [applicationId]);
   return (
     <S.BoardContent>
-      <S.BoardUserImg src={src} />
+      <S.BoardUserImg src={`${SERVER_URL}/image/${src}`} />
       <S.BoardContentText>{name}</S.BoardContentText>
       <Star star={star} />
       <label>

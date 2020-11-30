@@ -13,10 +13,15 @@ import {
   getRecode,
   getUserInfo,
   setComment,
+  setRequestApprove,
+  reportUser,
+  getCommentRequireList,
+  getRequestApproveList,
+  setUserInfo,
+  SERVER_URL,
 } from '../../lib/api/Mypage';
+import Header from '../Main/Header/MainHeader';
 
-const MODAL_TYPE_REVIEW = 'review';
-const MODAL_TYPE_REQUEST = 'request';
 const DEFAULT_USER_IMG =
   'https://stafforgserv.com.au/wp-content/uploads/2018/09/user-img.png';
 const Mypage = () => {
@@ -70,7 +75,7 @@ const Mypage = () => {
       return reviewDataArray;
     }
     return [];
-  }, [requestDataArray, reviewDataArray, modalType]);
+  }, [requestDataArray, reviewDataArray, modalType, id]);
   const setModalDataChangeFunction = useCallback(() => {
     if (modalType === 'RequestApproveModal') return requestDataArrayChange;
     if (modalType === 'ReviewModal') return reviewDataArrayChange;
@@ -79,11 +84,11 @@ const Mypage = () => {
   const getUserInfoAndSetState = useCallback(async () => {
     try {
       const { data } = await getUserInfo(id);
-      imgChange(data.imagepath);
+      imgChange(`${SERVER_URL}/image/${data.imagName}`);
       userNameChange(data.name);
-    } catch (error) {
-      console.log(error);
-    }
+      idChange(data.id);
+      starChange(data.score);
+    } catch (error) {}
   }, [id]);
   const recodeResponseToState = useCallback((response, index) => {
     return response.map(recode => ({
@@ -96,20 +101,19 @@ const Mypage = () => {
       const { data } = await getRecode(id);
       const newState = recodeResponseToState(data);
       storageArrayChange(newState);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }, [id]);
   const commentResponseToState = useCallback(response => {
     return response.map(comment => ({
-      text: comment.score.score_content,
-      userName: comment.score.target_name,
-      star: comment.score.score,
+      text: comment.comment,
+      userName: comment.senderName,
+      star: comment.score,
     }));
   }, []);
   const getCommentAndSetState = useCallback(async () => {
     try {
       const { data } = await getComment(id);
+      console.log(data);
       const newState = commentResponseToState(data);
       commentsChange(newState);
     } catch (error) {}
@@ -117,19 +121,63 @@ const Mypage = () => {
   const alarmResponseToState = useCallback((response, index) => {
     return response.map(alarm => ({
       text: alarm.content,
-      id: index,
-      type: alarm.type,
+
+      id: alarm.notifyId,
+      type: alarm.notifyType,
+      userId: alarm.userUuid,
+      postId: alarm.postId,
+      notifyId: alarm.notifyId,
+  
     }));
   }, []);
   const getAlarmAndSetState = useCallback(async () => {
     try {
-      const { data } = await getAlarm(id);
+      const { data } = await getAlarm();
       const newState = alarmResponseToState(data);
       noticeArrayChange(newState);
+    } catch (error) {}
+  }, [id]);
+  const commentReqireListResponseToState = dataList => {
+    return dataList.map(({ userName, imageName, userUuid, postId }) => ({
+      name: userName,
+      src: imageName,
+      star: 0,
+      review: '',
+      userId: userUuid,
+      postId: postId,
+    }));
+  };
+  const getCommentReqireListAndSetState = useCallback(async id => {
+    try {
+      const { data } = await getCommentRequireList(id);
+      const newState = commentReqireListResponseToState(data);
+      console.log(newState);
+      reviewDataArrayChange(newState);
     } catch (error) {
       console.log(error);
     }
-  }, [id]);
+  }, []);
+  const requestApproveListResponseToState = useCallback(dataList => {
+    return dataList.map(data => ({
+      name: data.score,
+      name: data.userName,
+      id: data.userId,
+      src: data.imageName,
+      applicationId: data.applicationId,
+    }));
+  }, []);
+  const getRequestListAndSetState = useCallback(async id => {
+    try {
+      const { data } = await getRequestApproveList(id);
+      const newState = requestApproveListResponseToState(data);
+      requestDataArrayChange(newState);
+    } catch (error) {}
+  });
+  const setUserInfoAndSetState = useCallback(async body => {
+    try {
+      await setUserInfo(body);
+    } catch (error) {}
+  });
   const renderNoticeComponent = useCallback(
     isMine => {
       if (isMine) {
@@ -144,7 +192,7 @@ const Mypage = () => {
       }
       return <AnotherComment comments={comments} />;
     },
-    [noticeArray, setModalReviewModal, setModalRequestModal],
+    [noticeArray, setModalReviewModal, setModalRequestModal, comments],
   );
   const renderCommentComponent = useCallback(
     isMine => {
@@ -161,6 +209,9 @@ const Mypage = () => {
     getCommentAndSetState();
     getRecodeAndSetState();
   }, []);
+  useEffect(() => {
+    console.log(reviewDataArray);
+  }, [reviewDataArray]);
   return (
     <>
       <Modal
@@ -171,6 +222,7 @@ const Mypage = () => {
         modalId={modalId}
         modalIdChange={modalIdChange}
       />
+      <Header />
       <S.MypageDiv>
         <div>
           <div>
@@ -183,6 +235,8 @@ const Mypage = () => {
               isMine={isMine}
               modalOn={setModalReportModal}
               modalDelete={modalDelete}
+              star={star}
+              setUserInfo={setUserInfoAndSetState}
             />
             <Storage storageContentArray={storageArray} />
           </div>
