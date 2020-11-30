@@ -10,7 +10,7 @@ const Chatting = ({ chattingLogList, sendChatting }) => {
       <ChattingLog
         isMine={chattingLog.mine}
         text={chattingLog.text}
-        user={chattingLog.user}
+        user={chattingLog.name}
         key={`${chattingLog.user}-${chattingLog.text}-${index}`}
       />
     ));
