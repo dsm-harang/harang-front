@@ -111,6 +111,8 @@ export const BoardContent = styled.div`
 export const BoardContentText = styled.p`
   font-size: 20px;
   margin: 0px 30px;
+  width: 50px;
+  text-align: center;
 `;
 
 export const BoardUserImg = styled.img`
