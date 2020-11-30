@@ -9,10 +9,11 @@ const RequestApproveModalContent = ({
   src,
   star,
   setPersonChecked,
+  applicationId,
 }) => {
   const inputChangeHandler = useCallback(() => {
-    setPersonChecked(id);
-  }, [id]);
+    setPersonChecked(applicationId);
+  }, [applicationId]);
   return (
     <S.BoardContent>
       <S.BoardUserImg src={`${SERVER_URL}/image/${src}`} />
